@@ -6,16 +6,44 @@
 // #include <curses.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <time.h>
 #include <stdio.h>
+#include <string.h>
 
-#define Red \033[0;31m
-#define Green \033[0;32m
-#define Yellow \033[0;33m
-#define Blue \033[0;34m
-#define White \033[0;37m
-#define Orange \033[0;35m
+typedef enum { W, O, G, R, B, Y } T_COLOR ;
+typedef enum { UP, LEFT, FRONT, RIGHT, BACK, DOWN } T_SIDE ;
 
-typedef enum { O, W, G, Y, R, B, LG } T_COLOR ;
-typedef enum { LEFT, UP, FRONT, DOWN, RIGHT, BACK } T_SIDE ;
+typedef struct s_pos
+{
+    T_COLOR     color;
+    T_SIDE      side;
+}               t_pos;
+
+typedef struct  rubiks
+{
+    t_pos ***position;
+
+}               rubiks;
+
+int select_color(T_COLOR color);
+
+char    *shuffle_generator(int moves);
+rubiks  *shuffle_cube(rubiks *cube, char *shuffle);
+
+void    rot_C_side(int i, rubiks *cube);
+void    rot_side(int i, rubiks *cube);
+
+void    rot_UP(rubiks *cube);
+void    rot_UP_C(rubiks *cube);
+void    rot_DOWN(rubiks *cube);
+void    rot_DOWN_C(rubiks *cube);
+void    rot_LEFT(rubiks *cube);
+void    rot_LEFT_C(rubiks *cube);
+void    rot_FRONT(rubiks *cube);
+void    rot_FRONT_C(rubiks *cube);
+void    rot_RIGHT(rubiks *cube);
+void    rot_RIGHT_C(rubiks *cube);
+void    rot_BACK(rubiks *cube);
+void    rot_BACK_C(rubiks *cube);
 
 #endif
