@@ -111,7 +111,7 @@ int     main(int ac, char **av)
     cube = init_rubiks(cube);
 
     // char *shuffle = shuffle_generator(atoi(av[1]));
-    char *shuffle = shuffle_generator(3);
+    char *shuffle = shuffle_generator(30);
 
     cube = shuffle_cube(cube, shuffle);
     display_rubiks(cube);

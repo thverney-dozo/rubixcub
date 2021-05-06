@@ -19,6 +19,13 @@ typedef struct s_pos
     T_SIDE      side;
 }               t_pos;
 
+typedef struct s_match
+{
+    int i[1];
+    int y[1];
+    int z[1];
+}              t_match;
+
 typedef struct  rubiks
 {
     t_pos ***position;
