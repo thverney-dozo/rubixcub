@@ -21,9 +21,9 @@ typedef struct s_pos
 
 typedef struct s_match
 {
-    int i[1];
-    int y[1];
-    int z[1];
+    int i[2];
+    int y[2];
+    int z[2];
 }              t_match;
 
 typedef struct  rubiks
@@ -40,6 +40,8 @@ rubiks  *shuffle_cube(rubiks *cube, char *shuffle);
 void    rot_C_side(int i, rubiks *cube);
 void    rot_side(int i, rubiks *cube);
 
+void    display_rubiks(rubiks *cube);
+void    white_cross(rubiks *cube);
 void    rot_UP(rubiks *cube);
 void    rot_UP_C(rubiks *cube);
 void    rot_DOWN(rubiks *cube);

@@ -110,20 +110,18 @@ int     main(int ac, char **av)
     cube = create_rubiks();
     cube = init_rubiks(cube);
 
-    // char *shuffle = shuffle_generator(atoi(av[1]));
     char *shuffle = shuffle_generator(30);
-
     cube = shuffle_cube(cube, shuffle);
-    display_rubiks(cube);
 
-    // rot_RIGHT(cube);
+    display_rubiks(cube);
+    white_cross(cube);
+    display_rubiks(cube);
+    // rot_UP(cube);
+    // rot_DOWN(cube);
+    // display_rubiks(cube);
     // rot_BACK(cube);
     // display_rubiks(cube);
 
-    // display_rubiks(cube);
-
-    // rot_LEFT(cube);
-    // display_rubiks(cube);
 
     free(cube);
 
