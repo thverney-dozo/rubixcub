@@ -39,7 +39,7 @@ rubiks  *shuffle_cube(rubiks *cube, char *shuffle);
 
 void    rot_C_side(int i, rubiks *cube);
 void    rot_side(int i, rubiks *cube);
-
+void    solve_white_corners(rubiks *cube);
 void    display_rubiks(rubiks *cube);
 void    white_cross(rubiks *cube);
 void    rot_UP(rubiks *cube);

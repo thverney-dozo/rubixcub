@@ -116,6 +116,8 @@ int     main(int ac, char **av)
     display_rubiks(cube);
     white_cross(cube);
     display_rubiks(cube);
+    solve_white_corners(cube);
+    display_rubiks(cube); 
     // rot_UP(cube);
     // rot_DOWN(cube);
     // display_rubiks(cube);

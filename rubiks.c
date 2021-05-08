@@ -361,73 +361,73 @@ t_match      match(rubiks *cube, int i1, int y1, int z1, int i2, int y2, int z2)
     match.y[0] = y1;
     match.z[0] = z1;
 
-    match.i[1] = (i2 == 7 ? 7 : i2);
-    match.y[1] = (y2 == 7 ? 7 : y2);
-    match.z[1] = (z2 == 7 ? 7 : z2);
+    match.i[1] = (i2 == -1 ? -1 : i2);
+    match.y[1] = (y2 == -1 ? -1 : y2);
+    match.z[1] = (z2 == -1 ? -1 : z2);
     return (match);
 }
 
-t_match    find_match(rubiks *cube, int i, int y, int z) // 7 is default value
+t_match    find_match(rubiks *cube, int i, int y, int z) // -1 is default value
 {
     if (i == 0 && y == 0 && z == 1)
-        return (match(cube, 4,0,1, 7,7,7));
+        return (match(cube, 4,0,1, -1,-1,-1));
     if (i == 4 && y == 0 && z == 1)
-        return (match(cube, 0,0,1, 7,7,7));
+        return (match(cube, 0,0,1, -1,-1,-1));
         
     if (i == 0 && y == 2 && z == 1)
-        return (match(cube, 2,0,1, 7,7,7));
+        return (match(cube, 2,0,1, -1,-1,-1));
     if (i == 2 && y == 0 && z == 1)
-        return (match(cube, 0,2,1, 7,7,7));
+        return (match(cube, 0,2,1, -1,-1,-1));
         
     if (i == 2 && y == 1 && z == 0)
-        return (match(cube, 1,1,2, 7,7,7));
+        return (match(cube, 1,1,2, -1,-1,-1));
     if (i == 1 && y == 1 && z == 2)
-        return (match(cube, 2,1,0, 7,7,7));
+        return (match(cube, 2,1,0, -1,-1,-1));
         
     if (i == 2 && y == 1 && z == 2)
-        return (match(cube, 3,1,0, 7,7,7));
+        return (match(cube, 3,1,0, -1,-1,-1));
     if (i == 3 && y == 1 && z == 0)
-        return (match(cube, 2,1,2, 7,7,7));
+        return (match(cube, 2,1,2, -1,-1,-1));
         
     if (i == 3 && y == 1 && z == 2)
-        return (match(cube, 4,1,0, 7,7,7));
+        return (match(cube, 4,1,0, -1,-1,-1));
     if (i == 4 && y == 1 && z == 0)
-        return (match(cube, 3,1,2, 7,7,7));
+        return (match(cube, 3,1,2, -1,-1,-1));
         
     if (i == 5 && y == 0 && z == 1)
-        return (match(cube, 2,2,1, 7,7,7));
+        return (match(cube, 2,2,1, -1,-1,-1));
     if (i == 2 && y == 2 && z == 1)
-        return (match(cube, 5,0,1, 7,7,7));
+        return (match(cube, 5,0,1, -1,-1,-1));
         
     if (i == 4 && y == 1 && z == 2)
-        return (match(cube, 1,1,0, 7,7,7));
+        return (match(cube, 1,1,0, -1,-1,-1));
     if (i == 1 && y == 1 && z == 0)
-        return (match(cube, 4,1,2, 7,7,7));
+        return (match(cube, 4,1,2, -1,-1,-1));
         
     if (i == 3 && y == 2 && z == 1)
-        return (match(cube, 5,1,2, 7,7,7));
+        return (match(cube, 5,1,2, -1,-1,-1));
     if (i == 5 && y == 1 && z == 2)
-        return (match(cube, 3,2,1, 7,7,7));
+        return (match(cube, 3,2,1, -1,-1,-1));
         
     if (i == 1 && y == 2 && z == 1)
-        return (match(cube, 5,1,0, 7,7,7));
+        return (match(cube, 5,1,0, -1,-1,-1));
     if (i == 5 && y == 1 && z == 0)
-        return (match(cube, 1,2,1, 7,7,7));
+        return (match(cube, 1,2,1, -1,-1,-1));
         
     if (i == 5 && y == 2 && z == 1)
-        return (match(cube, 4,2,1, 7,7,7));
+        return (match(cube, 4,2,1, -1,-1,-1));
     if (i == 4 && y == 2 && z == 1)
-        return (match(cube, 5,2,1, 7,7,7));
+        return (match(cube, 5,2,1, -1,-1,-1));
         
     if (i == 0 && y == 1 && z == 0)
-        return (match(cube, 1,0,1, 7,7,7));
+        return (match(cube, 1,0,1, -1,-1,-1));
     if (i == 1 && y == 0 && z == 1)
-        return (match(cube, 0,1,0, 7,7,7));
+        return (match(cube, 0,1,0, -1,-1,-1));
         
     if (i == 0 && y == 1 && z == 2)
-        return (match(cube, 3,0,1, 7,7,7));
+        return (match(cube, 3,0,1, -1,-1,-1));
     if (i == 3 && y == 0 && z == 1)
-        return (match(cube, 0,1,2, 7,7,7));
+        return (match(cube, 0,1,2, -1,-1,-1));
     
     
     if (i == 0 && y == 2 && z == 2)
@@ -913,225 +913,129 @@ void    white_cross(rubiks *cube)
         white_cross(cube);
 }
 
+bool    is_white_corners_place(rubiks *cube)
+{
+    t_pos   ***p;
+    if (p[0][2][0].color == W && p[0][2][2].color == W &&p[0][0][2].color == W &&
+        p[0][0][0].color == W && p[1][0][2].color == O &&p[2][0][0].color == G &&
+        p[2][0][2].color == G && p[3][0][0].color == R &&p[3][0][2].color == R &&
+        p[4][0][0].color == B && p[4][0][2].color == B &&p[1][0][2].color == O)
+        return(true);
+    return (false);
+}
+
+bool    isSide(T_COLOR color, int i)
+{
+    if ((i == 0 && color == W) || (i == 1 && color == O) || (i == 2 && color == G)
+    || (i == 3 && color == R) || (i == 4 && color == B) || (i == 5 && color == Y))
+        return (true);
+    else
+        return (false);
+}
+
 void solve_white_corners(rubiks *cube)
 {
-    while(red[0]!='r' || red[6]!='r' || blue[0]!='b' || blue[6]!='b' || orange[0]!='o' || orange[6]!='o' || green[0]!='g' || green[6]!='g')
-    {
-        while(red[7]!='r')
-        {
-            rotate_clock('w');
-        }
-    if(blue[4]=='w' || red[4]=='w' || green[4]=='w' || orange[4]=='w')
-    {
-        while(blue[4]!='w')
-        {
-            rotate_clock('y');
-        }
-        while(red[2]!=red[7])
-        {
-            rotate_clock('w');
-        }
-        white_corners_alg_left();
-        while(red[7]!='r')
-        {
-            rotate_clock('w');
-        }
-    }
-    else if(blue[2]=='w' || red[2]=='w' || green[2]=='w' || orange[2]=='w')
-    {
-        while(red[2]!='w')
-        {
-            rotate_clock('y');
-        }
-        while(red[7]!=yellow[1])
-        {
-            rotate_clock('w');
-        }
-        white_corners_alg_right();
-        while(red[7]!='r')
-        {
-            rotate_clock('w');
-        }
-    }
-    else if(yellow[1]=='w' || yellow[3]=='w' || yellow[5]=='w' || yellow[7]=='w')
-    {
-        while(yellow[1]!='w')
-        {
-            rotate_clock('y');
-        }
-        while(red[2]!=blue[7])
-        {
-            rotate_clock('w');
-        }
-        rotate_clock('b');rotate_clock('b');rotate_clock('b');
-        rotate_clock('y');rotate_clock('y');
-        rotate_clock('b');
-        while(blue[4]!='w')
-        {
-            rotate_clock('y');
-        }
-        while(red[2]!=red[7])
-        {
-            rotate_clock('w');
-        }
-        white_corners_alg_left();
-        while(red[7]!='r')
-        {
-            rotate_clock('w');
-        }
-    }
-    else
-    {
-        while(red[7]==red[0])
-        {
-            rotate_clock('w');
-        }
-        white_corners_alg_left();
-        while(red[7]!='r')
-        {
-            rotate_clock('w');
-        }
-    }
-    }
-}
+    t_pos   ***p = cube->position;
+    t_match m;
+    T_COLOR tmp1;
+    T_COLOR tmp2;
+    T_COLOR tmp3;
 
-void    two_layers_config(rubiks *cube, int i, int y, int z, int config, t_match match)
-{
-    if (config == 1) // buttom left
-    {
+    // printf("coucou1\n");
+    // while (!is_white_corners_place(cube))
+    // {
+        for (int i = 0; i < 6; i++) {
+            for (int y = 0; y < 3; y++) {
+                for (int z = 0; z < 3; z++) {
+                    // printf("coucou2[%d][%d][%d]\n", i, y, z);
+                    m = find_match(cube, i, y, z);
+                    if (p[i][y][z].color == W &&  m.i[1] != -1)
+                    {
+                        // printf("coucou3\n");
 
-    }
-    else if (config == 2) // buttom right
-    {
+                        if (!isSide(p[m.i[0]][m.y[0]][m.z[0]].color , i) || !isSide(p[m.i[1]][m.y[1]][m.z[1]].color ,i) || !isSide(p[i][y][z].color ,i))
+                        {
+                            if (i == 0 || m.i[0] == 0 || m.i[1] == 0)
+                            {
+                                tmp1 = p[i][y][z].color;
+                                tmp2 = p[m.i[0]][m.y[0]][m.z[0]].color;
+                                tmp3 = p[m.i[1]][m.y[1]][m.z[1]].color;
+                                printf("coucou5[%d][%d][%d]\n", m.i[0], m.y[0], m.z[0]);
+                                if ((p[m.i[0]][m.y[0]][m.z[0]].side == LEFT || p[m.i[0]][m.y[0]][m.z[0]].side == FRONT || p[m.i[0]][m.y[0]][m.z[0]].side == UP) &&
+                                    (p[m.i[1]][m.y[1]][m.z[1]].side == LEFT || p[m.i[1]][m.y[1]][m.z[1]].side == FRONT || p[m.i[1]][m.y[1]][m.z[1]].side == UP) &&
+                                    (p[i][y][z].side == LEFT || p[i][y][z].side == FRONT || p[i][y][z].side == UP))
+                                {
+                                    rot_FRONT_C(cube);
+                                    rot_DOWN_C(cube);
+                                    rot_FRONT(cube);
+                                    if (tmp2 == R && tmp3 == G)
+                                        rot_DOWN(cube);
+                                    if (tmp2 == R && tmp3 == B)
+                                        rot_DOWN(cube);rot_DOWN(cube);
+                                    if (tmp2 == O && tmp3 == B)
+                                        rot_DOWN_C(cube);
+                                    display_rubiks(cube);
+                                    printf("coucou6.1\n");
+                                }
+                                else if ((p[m.i[0]][m.y[0]][m.z[0]].side == RIGHT || p[m.i[0]][m.y[0]][m.z[0]].side == FRONT || p[m.i[0]][m.y[0]][m.z[0]].side == UP) &&
+                                    (p[m.i[1]][m.y[1]][m.z[1]].side == RIGHT || p[m.i[1]][m.y[1]][m.z[1]].side == FRONT || p[m.i[1]][m.y[1]][m.z[1]].side == UP) &&
+                                    (p[i][y][z].side == RIGHT || p[i][y][z].side == FRONT || p[i][y][z].side == UP))
+                                {
+                                    rot_FRONT(cube);
+                                    rot_DOWN(cube);
+                                    rot_FRONT_C(cube);
+                                    if (tmp2 == O && tmp3 == G)
+                                        rot_DOWN_C(cube);
+                                    if (tmp2 == R && tmp3 == B)
+                                        rot_DOWN(cube);
+                                    if (tmp2 == O && tmp3 == B)
+                                        rot_DOWN(cube);rot_DOWN(cube);
+                                    display_rubiks(cube);
+                                    printf("coucou7.1\n");
+                                }
+                                else if ((p[m.i[0]][m.y[0]][m.z[0]].side == LEFT || p[m.i[0]][m.y[0]][m.z[0]].side == BACK || p[m.i[0]][m.y[0]][m.z[0]].side == UP) &&
+                                    (p[m.i[1]][m.y[1]][m.z[1]].side == LEFT || p[m.i[1]][m.y[1]][m.z[1]].side == BACK || p[m.i[1]][m.y[1]][m.z[1]].side == UP) &&
+                                    (p[i][y][z].side == LEFT || p[i][y][z].side == BACK || p[i][y][z].side == UP))
+                                {
+                                    rot_LEFT_C(cube);
+                                    rot_DOWN_C(cube);
+                                    rot_LEFT(cube);
+                                    if (tmp2 == O && tmp3 == G)
+                                        rot_DOWN(cube);
+                                    if (tmp2 == R && tmp3 == B)
+                                        rot_DOWN_C(cube);
+                                    if (tmp2 == G && tmp3 == R)
+                                        rot_DOWN(cube);rot_DOWN(cube);
+                                    printf("coucou8.1\n");
+                                    display_rubiks(cube);
+                                }
+                                else if ((p[m.i[0]][m.y[0]][m.z[0]].side == RIGHT || p[m.i[0]][m.y[0]][m.z[0]].side == BACK || p[m.i[0]][m.y[0]][m.z[0]].side == UP) &&
+                                    (p[m.i[1]][m.y[1]][m.z[1]].side == RIGHT || p[m.i[1]][m.y[1]][m.z[1]].side == BACK || p[m.i[1]][m.y[1]][m.z[1]].side == UP) &&
+                                    (p[i][y][z].side == RIGHT || p[i][y][z].side == BACK || p[i][y][z].side == UP))
+                                {
+                                    rot_RIGHT(cube);
+                                    rot_DOWN(cube);
+                                    rot_RIGHT_C(cube);
+                                    if (tmp2 == O && tmp3 == G)
+                                        rot_DOWN(cube);rot_DOWN(cube);
+                                    if (tmp2 == O && tmp3 == B)
+                                        rot_DOWN(cube);
+                                    if (tmp2 == G && tmp3 == R)
+                                        rot_DOWN_C(cube);
+                                    printf("coucou9.1\n");
+                                    display_rubiks(cube);
+                                }
+                                // while (isSide(p[m.i[1]][m.y[1]][m.z[1]].color, i)
 
-    }
-    else if (config == 3) // ender
-    {
-        if (cube->position[match.i[0]][match.y[0]][match.z[0]].color == 
+                                // soit les 2 soit 1 et white et lautre sur 
+                                // printf("coucou6\n");
 
-    }
-}
-
-void    first_two_layers(rubiks *cube)
-{
-
-
-
-    if (cube->position[2][2][2].color == W && cube->position[5][0][2].color == G && cube->position[3][2][0].color == R)
-    {
-
-    }
-    if (cube->position[2][2][2].color == W && cube->position[5][0][2].color == G && cube->position[3][2][0].color == R)
-    {
-
-    }
-    if (cube->position[2][2][2].color == W && cube->position[5][0][2].color == G && cube->position[3][2][0].color == R)
-    {
-
-    }
-
-
-    if (cube->position[2][2][2].color == W && cube->position[5][0][2].color == G && cube->position[3][2][0].color == R)
-    {
-
-    }
-    if (cube->position[2][2][2].color == W && cube->position[5][0][2].color == G && cube->position[3][2][0].color == R)
-    {
-
-    }
-    if (cube->position[2][2][2].color == W && cube->position[5][0][2].color == G && cube->position[3][2][0].color == R)
-    {
-
-    }
-    if (cube->position[2][2][2].color == W && cube->position[5][0][2].color == G && cube->position[3][2][0].color == R)
-    {
-
-    }
-    if (cube->position[2][2][2].color == W && cube->position[5][0][2].color == G && cube->position[3][2][0].color == R)
-    {
-
-    }
-    if (cube->position[2][2][2].color == W && cube->position[5][0][2].color == G && cube->position[3][2][0].color == R)
-    {
-
-    }
-    if (cube->position[2][2][2].color == W && cube->position[5][0][2].color == G && cube->position[3][2][0].color == R)
-    {
-
-    }
-    if (cube->position[2][2][2].color == W && cube->position[5][0][2].color == G && cube->position[3][2][0].color == R)
-    {
-
-    }
-    if (cube->position[2][2][2].color == W && cube->position[5][0][2].color == G && cube->position[3][2][0].color == R)
-    {
-
-    }
-    if (cube->position[2][2][2].color == W && cube->position[5][0][2].color == G && cube->position[3][2][0].color == R)
-    {
-
-    }
-    if (cube->position[2][2][2].color == W && cube->position[5][0][2].color == G && cube->position[3][2][0].color == R)
-    {
-
-    }
-    if (cube->position[2][2][2].color == W && cube->position[5][0][2].color == G && cube->position[3][2][0].color == R)
-    {
-
-    }
-    if (cube->position[2][2][2].color == W && cube->position[5][0][2].color == G && cube->position[3][2][0].color == R)
-    {
-
-    }
-    if (cube->position[2][2][2].color == W && cube->position[5][0][2].color == G && cube->position[3][2][0].color == R)
-    {
-
-    }
-    if (cube->position[2][2][2].color == W && cube->position[5][0][2].color == G && cube->position[3][2][0].color == R)
-    {
-
-    }
-    if (cube->position[2][2][2].color == W && cube->position[5][0][2].color == G && cube->position[3][2][0].color == R)
-    {
-
-    }
-    if (cube->position[2][2][2].color == W && cube->position[5][0][2].color == G && cube->position[3][2][0].color == R)
-    {
-
-    }
-    if (cube->position[2][2][2].color == W && cube->position[5][0][2].color == G && cube->position[3][2][0].color == R)
-    {
-
-    }
-    if (cube->position[2][2][2].color == W && cube->position[5][0][2].color == G && cube->position[3][2][0].color == R)
-    {
-
-    }
-    if (cube->position[2][2][2].color == W && cube->position[5][0][2].color == G && cube->position[3][2][0].color == R)
-    {
-
-    }
-    if (cube->position[2][2][2].color == W && cube->position[5][0][2].color == G && cube->position[3][2][0].color == R)
-    {
-
-    }
-    if (cube->position[2][2][2].color == W && cube->position[5][0][2].color == G && cube->position[3][2][0].color == R)
-    {
-
-    }
-)
- 
-
-    for (int i = 0; i < 6; i++)
-    {
-        for (int y = 0; y < 3; y++)
-        {
-            for (int z = 0; z < 3; z++)
-            {
-                match = find_match(cube, i, y, z);
-                    // printf("match -%d- [%d][%d][%d]\n", cube->position[match.i[0]][match.y[0]][match.z[0]].color, match.i[0], match.y[0], match.z[0]);
-                
+                            }
+                        }
+                    }
+                    // printf("coucou4\n");
+                }
             }
         }
-    }
+    // }
 }
