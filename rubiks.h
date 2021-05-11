@@ -36,12 +36,19 @@ int select_color(T_COLOR color);
 
 char    *shuffle_generator(int moves);
 rubiks  *shuffle_cube(rubiks *cube, char *shuffle);
-
-void    rot_C_side(int i, rubiks *cube);
-void    rot_side(int i, rubiks *cube);
-void    solve_white_corners(rubiks *cube);
 void    display_rubiks(rubiks *cube);
+
+
 void    white_cross(rubiks *cube);
+void    solve_white_corners(rubiks *cube);
+void    first_two_layers(rubiks *cube);
+void    yellow_cross(rubiks *cube);
+void    yellow_edge(rubiks *cube);
+void    yellow_corners(rubiks *cube);
+void    perfect_yellow_side(rubiks *cube);
+
+
+void    rot_side(int i, rubiks *cube);
 void    rot_UP(rubiks *cube);
 void    rot_UP_C(rubiks *cube);
 void    rot_DOWN(rubiks *cube);

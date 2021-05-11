@@ -113,17 +113,29 @@ int     main(int ac, char **av)
     char *shuffle = shuffle_generator(30);
     cube = shuffle_cube(cube, shuffle);
 
+    printf("shuffled cube\n");
     display_rubiks(cube);
     white_cross(cube);
+    printf("white cross\n");
     display_rubiks(cube);
-    solve_white_corners(cube);
+    solve_white_corners(cube); 
+    printf("white corners\n");
     display_rubiks(cube); 
-    // rot_UP(cube);
-    // rot_DOWN(cube);
-    // display_rubiks(cube);
-    // rot_BACK(cube);
-    // display_rubiks(cube);
-
+    first_two_layers(cube);
+    printf("first_two_layers\n");
+    display_rubiks(cube); 
+    printf("yellow cross\n");
+    yellow_cross(cube);
+    display_rubiks(cube);
+    printf("yellow perfect cross\n");
+    yellow_edge(cube);
+    display_rubiks(cube);
+    printf("yellow corners\n");
+    yellow_corners(cube);
+    display_rubiks(cube);
+    printf("finish cube\n");
+    perfect_yellow_side(cube);
+    display_rubiks(cube);
 
     free(cube);
 
