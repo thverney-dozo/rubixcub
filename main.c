@@ -113,6 +113,10 @@ int     main(int ac, char **av)
     char *shuffle = shuffle_generator(30);
     cube = shuffle_cube(cube, shuffle);
 
+    display_rubiks(cube);
+    if (is_illegal(cube))
+        printf("illegal cube\n");
+
     printf("shuffled cube\n");
     display_rubiks(cube);
     white_cross(cube);
@@ -136,6 +140,11 @@ int     main(int ac, char **av)
     printf("finish cube\n");
     perfect_yellow_side(cube);
     display_rubiks(cube);
+    printf("grey cube\n");
+    applyGreyOnCube(cube);
+    display_rubiks(cube);
+
+
 
     free(cube);
 

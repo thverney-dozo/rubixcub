@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <string.h>
 
-typedef enum { W, O, G, R, B, Y } T_COLOR ;
+typedef enum { W, O, G, R, B, Y, LG} T_COLOR ;
 typedef enum { UP, LEFT, FRONT, RIGHT, BACK, DOWN } T_SIDE ;
 
 typedef struct s_pos
@@ -37,6 +37,8 @@ int select_color(T_COLOR color);
 char    *shuffle_generator(int moves);
 rubiks  *shuffle_cube(rubiks *cube, char *shuffle);
 void    display_rubiks(rubiks *cube);
+void    applyGreyOnCube(rubiks *cube);
+bool    is_illegal(rubiks *cube);
 
 
 void    white_cross(rubiks *cube);
@@ -47,7 +49,7 @@ void    yellow_edge(rubiks *cube);
 void    yellow_corners(rubiks *cube);
 void    perfect_yellow_side(rubiks *cube);
 
-
+t_match    find_match(rubiks *cube, int i, int y, int z);
 void    rot_side(int i, rubiks *cube);
 void    rot_UP(rubiks *cube);
 void    rot_UP_C(rubiks *cube);

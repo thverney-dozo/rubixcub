@@ -126,6 +126,179 @@ int side_to_index(T_SIDE side)
     return (-1);
 }
 
+void    applyGreyOnCube(rubiks *cube)
+{
+    for (int i = 0; i < 6; i++)
+    {
+        for (int y = 0; y < 3; y++)
+        {
+            for (int z = 0; z < 3; z++)
+            {
+                cube->position[i][y][z].color = LG;
+            }
+        }
+    }
+}
+
+bool    is_illegal(rubiks *cube)
+{
+    t_pos ***p = cube->position;
+    int ygr,yog,wgo,wrg,ybo,yrb,wbr,wob,wo,wb,wr,wg,gr,rb,bo,og,yg,yo,yb,yr,w,o,g,r,b,yellow;
+    ygr = 0;
+    yog = 0;
+    wgo = 0;
+    wrg = 0;
+    ybo = 0;
+    yrb = 0;
+    wbr = 0;
+    wob = 0;
+    wo = 0;
+    wb = 0;
+    wr = 0;
+    wg = 0;
+    gr = 0;
+    rb = 0;
+    bo = 0;
+    og = 0;
+    yg = 0;
+    yo = 0;
+    yb = 0;
+    yr = 0;
+    w = 0;
+    o = 0;
+    g = 0;
+    r = 0;
+    b = 0;
+    yellow = 0;
+    t_match m;
+
+    for (int i = 0; i < 6; i++)
+    {
+        for (int y = 0; y < 3; y++)
+        {
+            for (int z = 0; z < 3; z++)
+            {
+                m = find_match(cube, i,y,z);
+                if (m.i[0] == -1 && p[i][y][z].color == W)
+                    w++;
+                else if (m.i[0] == -1 && p[i][y][z].color == O)
+                    o++;
+                else if (m.i[0] == -1 && p[i][y][z].color == G)
+                    g++;
+                else if (m.i[0] == -1 && p[i][y][z].color == R)
+                    r++;
+                else if (m.i[0] == -1 && p[i][y][z].color == B)
+                    b++;
+                else if (m.i[0] == -1 && p[i][y][z].color == Y)
+                    yellow++;
+                else if (m.i[1] == -1 && p[i][y][z].color == Y && p[m.i[0]][m.y[0]][m.z[0]].color == R)
+                    yr++;
+                else if (m.i[1] == -1 && p[i][y][z].color == Y && p[m.i[0]][m.y[0]][m.z[0]].color == G)
+                    yg++;
+                else if (m.i[1] == -1 && p[i][y][z].color == Y && p[m.i[0]][m.y[0]][m.z[0]].color == O)
+                    yo++;
+                else if (m.i[1] == -1 && p[i][y][z].color == Y && p[m.i[0]][m.y[0]][m.z[0]].color == B)
+                    yb++;
+                else if (m.i[1] == -1 && p[i][y][z].color == W && p[m.i[0]][m.y[0]][m.z[0]].color == O)
+                    wo++;
+                else if (m.i[1] == -1 && p[i][y][z].color == W && p[m.i[0]][m.y[0]][m.z[0]].color == B)
+                    wb++;
+                else if (m.i[1] == -1 && p[i][y][z].color == W && p[m.i[0]][m.y[0]][m.z[0]].color == R)
+                    wr++;
+                else if (m.i[1] == -1 && p[i][y][z].color == W && p[m.i[0]][m.y[0]][m.z[0]].color == G)
+                    wg++;
+                else if (m.i[1] == -1 && p[i][y][z].color == G && p[m.i[0]][m.y[0]][m.z[0]].color == R)
+                    gr++;
+                else if (m.i[1] == -1 && p[i][y][z].color == R && p[m.i[0]][m.y[0]][m.z[0]].color == B)
+                    rb++;
+                else if (m.i[1] == -1 && p[i][y][z].color == B && p[m.i[0]][m.y[0]][m.z[0]].color == O)
+                    bo++;
+                else if (m.i[1] == -1 && p[i][y][z].color == O && p[m.i[0]][m.y[0]][m.z[0]].color == G)
+                    og++;
+                else if (m.i[1] != -1 && p[i][y][z].color == Y && p[m.i[0]][m.y[0]][m.z[0]].color == G && p[m.i[1]][m.y[1]][m.z[1]].color == R)
+                    ygr++;
+                else if (m.i[1] != -1 && p[i][y][z].color == Y && p[m.i[0]][m.y[0]][m.z[0]].color == O && p[m.i[1]][m.y[1]][m.z[1]].color == G)
+                    yog++;
+                else if (m.i[1] != -1 && p[i][y][z].color == Y && p[m.i[0]][m.y[0]][m.z[0]].color == B && p[m.i[1]][m.y[1]][m.z[1]].color == O)
+                    ybo++;
+                else if (m.i[1] != -1 && p[i][y][z].color == Y && p[m.i[0]][m.y[0]][m.z[0]].color == R && p[m.i[1]][m.y[1]][m.z[1]].color == B)
+                    yrb++;
+                else if (m.i[1] != -1 && p[i][y][z].color == W && p[m.i[0]][m.y[0]][m.z[0]].color == R && p[m.i[1]][m.y[1]][m.z[1]].color == G)
+                    wrg++;
+                else if (m.i[1] != -1 && p[i][y][z].color == W && p[m.i[0]][m.y[0]][m.z[0]].color == G && p[m.i[1]][m.y[1]][m.z[1]].color == O)
+                    wgo++;
+                else if (m.i[1] != -1 && p[i][y][z].color == W && p[m.i[0]][m.y[0]][m.z[0]].color == O && p[m.i[1]][m.y[1]][m.z[1]].color == B)
+                    wob++;
+                else if (m.i[1] != -1 && p[i][y][z].color == W && p[m.i[0]][m.y[0]][m.z[0]].color == B && p[m.i[1]][m.y[1]][m.z[1]].color == R)
+                    wbr++;
+                else if (m.i[1] != -1 && p[i][y][z].color == W && p[m.i[0]][m.y[0]][m.z[0]].color == R && p[m.i[1]][m.y[1]][m.z[1]].color == G)
+                    wrg++;
+            }
+        }
+    }
+    if (ygr != 1 || yog != 1 || wgo != 1 || wrg != 1 || ybo != 1 || yrb != 1 || wbr != 1 || wob != 1 || wo != 1 || wb != 1 || wr != 1 || wg != 1
+    || gr != 1 || rb != 1 || bo != 1 || og != 1 || yg != 1 || yo != 1 || yb != 1 || yr != 1 || w != 1 || o != 1 || g != 1 || r != 1 || b != 1 || yellow != 1)
+        return (true);
+    return (false);
+}
+
+// void    setColorToCube(rubiks *cube, int i, int y, int z, char color)
+// {
+//     t_pos ***p = cube->position;
+
+//     switch (color)
+//     {
+//         case 'w':
+//             p[i][y][z].color = W;
+//             break;
+//         case 'y':
+//             p[i][y][z].color = Y;
+//             break;
+//         case 'g':
+//             p[i][y][z].color = G;
+//             break;
+//         case 'r':
+//             p[i][y][z].color = R;
+//             break;
+//         case 'o':
+//             p[i][y][z].color = O;
+//             break;
+//         case 'b':
+//             p[i][y][z].color = B;
+//             break;
+        
+//         default:
+//             p[i][y][z].color = LG;
+//             break;
+//     }
+// }
+
+// bool is_filled(rubiks *cube)
+// {
+//     for (int i = 0; i < 6; i++)
+//         for (int y = 0; y < 3; y++)
+//             for (int z = 0; z < 3; z++)
+//                 if (cube->position[i][y][z].color == LG)
+//                     return (false);
+//     return (true);
+// }
+
+// void    fill_cube(rubiks *cube)
+// {
+//     int i;      // 0 to 5
+//     int y;      // 0 to 2
+//     int z;      // 0 to 2
+//     char color; // white-yellow-red-blue-green-orange
+
+//     while (!is_filled(cube))
+//     {
+//         // fill with ncurse detection
+//         setColorToCube(cube, i, y, z, color);
+//     }
+//     if (is_illegal(cube, i, y, z, color))
+//         applyGreyOnCube(cube);
+
+// }
 
 void    rot_side(int i, rubiks *cube)
 {
