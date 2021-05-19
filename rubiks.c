@@ -1,6 +1,6 @@
 #include "rubiks.h"
 
-char    *shuffle_generator(int moves)
+char    *shuffle_generator(int moves) // create a "random" litteral pattern
 {
     char *str;
     int id_move = 0;
@@ -59,7 +59,7 @@ char    *shuffle_generator(int moves)
     return (str);
 }
 
-rubiks  *shuffle_cube(rubiks *cube, char *shuffle)
+rubiks  *shuffle_cube(rubiks *cube, char *shuffle) // apply the string pattern with rotation to the cube
 {
     for (int i = 1; i <= strlen(shuffle); i++)
     {
@@ -102,8 +102,6 @@ rubiks  *shuffle_cube(rubiks *cube, char *shuffle)
                 rot_FRONT_C(cube);
                 break;
         }
-        // printf("move : %c\n", shuffle[i]);
-        // display_rubiks(cube);
     }
     return (cube);
 }
@@ -140,37 +138,14 @@ void    applyGreyOnCube(rubiks *cube)
     }
 }
 
-bool    is_illegal(rubiks *cube)
+bool    is_illegal(rubiks *cube) // check if the cube has an illegal stat
 {
+    t_match m;
     t_pos ***p = cube->position;
     int ygr,yog,wgo,wrg,ybo,yrb,wbr,wob,wo,wb,wr,wg,gr,rb,bo,og,yg,yo,yb,yr,w,o,g,r,b,yellow;
-    ygr = 0;
-    yog = 0;
-    wgo = 0;
-    wrg = 0;
-    ybo = 0;
-    yrb = 0;
-    wbr = 0;
-    wob = 0;
-    wo = 0;
-    wb = 0;
-    wr = 0;
-    wg = 0;
-    gr = 0;
-    rb = 0;
-    bo = 0;
-    og = 0;
-    yg = 0;
-    yo = 0;
-    yb = 0;
-    yr = 0;
-    w = 0;
-    o = 0;
-    g = 0;
-    r = 0;
-    b = 0;
-    yellow = 0;
-    t_match m;
+
+    ygr = 0; yog = 0; wgo = 0; wrg = 0; ybo = 0; yrb = 0; wbr = 0; wob = 0; wo = 0; wb = 0; wr = 0; wg = 0;
+    gr = 0; rb = 0; bo = 0; og = 0; yg = 0; yo = 0; yb = 0; yr = 0; w = 0; o = 0; g = 0; r = 0; b = 0; yellow = 0;
 
     for (int i = 0; i < 6; i++)
     {
@@ -242,65 +217,7 @@ bool    is_illegal(rubiks *cube)
     return (false);
 }
 
-// void    setColorToCube(rubiks *cube, int i, int y, int z, char color)
-// {
-//     t_pos ***p = cube->position;
-
-//     switch (color)
-//     {
-//         case 'w':
-//             p[i][y][z].color = W;
-//             break;
-//         case 'y':
-//             p[i][y][z].color = Y;
-//             break;
-//         case 'g':
-//             p[i][y][z].color = G;
-//             break;
-//         case 'r':
-//             p[i][y][z].color = R;
-//             break;
-//         case 'o':
-//             p[i][y][z].color = O;
-//             break;
-//         case 'b':
-//             p[i][y][z].color = B;
-//             break;
-        
-//         default:
-//             p[i][y][z].color = LG;
-//             break;
-//     }
-// }
-
-// bool is_filled(rubiks *cube)
-// {
-//     for (int i = 0; i < 6; i++)
-//         for (int y = 0; y < 3; y++)
-//             for (int z = 0; z < 3; z++)
-//                 if (cube->position[i][y][z].color == LG)
-//                     return (false);
-//     return (true);
-// }
-
-// void    fill_cube(rubiks *cube)
-// {
-//     int i;      // 0 to 5
-//     int y;      // 0 to 2
-//     int z;      // 0 to 2
-//     char color; // white-yellow-red-blue-green-orange
-
-//     while (!is_filled(cube))
-//     {
-//         // fill with ncurse detection
-//         setColorToCube(cube, i, y, z, color);
-//     }
-//     if (is_illegal(cube, i, y, z, color))
-//         applyGreyOnCube(cube);
-
-// }
-
-void    rot_side(int i, rubiks *cube)
+void    rot_side(int i, rubiks *cube) // clockwise rotation on a side
 {
     t_pos tmp;
     t_pos tmp1;
@@ -322,7 +239,7 @@ void    rot_side(int i, rubiks *cube)
     cube->position[i][0][1] = tmp;
 }
 
-void    rot_UP(rubiks *cube)
+void    rot_UP(rubiks *cube) // up rotation 
 {
     t_pos *tmp;
 
@@ -334,13 +251,13 @@ void    rot_UP(rubiks *cube)
     rot_side(0, cube);
 }
 
-void    rot_UP_C(rubiks *cube)
+void    rot_UP_C(rubiks *cube) // reverse up rotation
 {
     for (int i = 0; i < 3; i++)
         rot_UP(cube);
 }
 
-void    rot_DOWN(rubiks *cube)
+void    rot_DOWN(rubiks *cube) // down rotation
 {
     t_pos *tmp;
     tmp = cube->position[4][2];
@@ -351,13 +268,13 @@ void    rot_DOWN(rubiks *cube)
     rot_side(5, cube);
 }
 
-void    rot_DOWN_C(rubiks *cube)
+void    rot_DOWN_C(rubiks *cube) // reverse down rotation
 {
     for (int i = 0; i < 3; i++)
         rot_DOWN(cube);
 }
 
-void    rot_FRONT(rubiks *cube)
+void    rot_FRONT(rubiks *cube) // // front rotation
 {
     t_pos tmp2;
 
@@ -386,13 +303,13 @@ void    rot_FRONT(rubiks *cube)
     rot_side(2, cube);
 }
 
-void    rot_FRONT_C(rubiks *cube)
+void    rot_FRONT_C(rubiks *cube) // reverse front rotation
 {
     for (int i = 0; i < 3; i++)
         rot_FRONT(cube);
 }
 
-void    rot_LEFT(rubiks *cube)
+void    rot_LEFT(rubiks *cube) // left rotation
 {
     t_pos tmp2;
 
@@ -421,13 +338,13 @@ void    rot_LEFT(rubiks *cube)
     rot_side(1, cube);
 }
 
-void    rot_LEFT_C(rubiks *cube)
+void    rot_LEFT_C(rubiks *cube) // reverse left rotation
 {
     for (int i = 0; i < 3; i++)
         rot_LEFT(cube);
 }
 
-void    rot_RIGHT(rubiks *cube)
+void    rot_RIGHT(rubiks *cube) // right rotation
 {
     t_pos tmp2;
 
@@ -456,14 +373,14 @@ void    rot_RIGHT(rubiks *cube)
     rot_side(3, cube);
 }
 
-void    rot_RIGHT_C(rubiks *cube)
+void    rot_RIGHT_C(rubiks *cube) // inverse right rotation
 {
     for (int i = 0; i < 3; i++)
         rot_RIGHT(cube);
 }
 
 
-void    rot_BACK(rubiks *cube)
+void    rot_BACK(rubiks *cube) // back rotation
 {
     t_pos tmp2;
 
@@ -490,7 +407,7 @@ void    rot_BACK(rubiks *cube)
     rot_side(4, cube);
 }
 
-void    rot_BACK_C(rubiks *cube)
+void    rot_BACK_C(rubiks *cube) // back inverse rotation
 {
     for (int i = 0; i < 3; i++)
         rot_BACK(cube);
@@ -498,7 +415,7 @@ void    rot_BACK_C(rubiks *cube)
 
 
 // FINDER
-t_match      match(rubiks *cube, int i1, int y1, int z1, int i2, int y2, int z2)
+t_match      match(rubiks *cube, int i1, int y1, int z1, int i2, int y2, int z2) // create a matching case structure
 {
     t_match match;
 
@@ -512,7 +429,7 @@ t_match      match(rubiks *cube, int i1, int y1, int z1, int i2, int y2, int z2)
     return (match);
 }
 
-t_match    find_match(rubiks *cube, int i, int y, int z) // -1 is default value
+t_match    find_match(rubiks *cube, int i, int y, int z) // return match case of a case and -1 is the default value
 {
     if (i == 0 && y == 0 && z == 1)
         return (match(cube, 4,0,1, -1,-1,-1));
@@ -1057,8 +974,6 @@ void    isOnSide(rubiks *cube)
     {   rot_LEFT_C(cube); rot_DOWN_C(cube); rot_DOWN_C(cube); rot_LEFT(cube); rot_DOWN(cube); rot_LEFT_C(cube); rot_DOWN_C(cube); rot_LEFT(cube); }
     else if (p[4][2][2].color == B && p[5][2][0].color == O && p[1][2][0].color == W) // BLUE ORANGE WHITE
     {   rot_LEFT_C(cube); rot_DOWN_C(cube); rot_LEFT(cube); }
-
-
 }
 
 void solve_white_corners(rubiks *cube)
@@ -1601,5 +1516,4 @@ void    perfect_yellow_side(rubiks *cube)
         combR(c); combR(c); rot_DOWN_C(c); combR(c); combR(c); combR(c); combR(c); rot_DOWN(c);
         perfect_yellow_side(c);
     }
-    
 }

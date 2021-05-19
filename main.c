@@ -1,6 +1,6 @@
 #include "rubiks.h"
 
-rubiks   *create_rubiks()
+rubiks   *create_rubiks() // allocate memory
 {
     rubiks *cube;
 
@@ -21,7 +21,21 @@ rubiks   *create_rubiks()
     return (cube);
 }
 
-rubiks    *init_rubiks(rubiks *cube)
+void    freeCube(rubiks *cube) // free allocated memory
+{
+    for (int i = 0; i < 6; i++)
+    {
+        for (int y = 0; y < 3 ;y++)
+        {
+            free(cube->position[i][y]);
+        }
+        free(cube->position[i]);
+    }
+    free(cube->position);
+    free(cube);
+}
+
+rubiks    *init_rubiks(rubiks *cube) // initialize colors and sides on each case
 {
     T_COLOR color = W;
     T_SIDE  side = UP;
@@ -38,7 +52,6 @@ rubiks    *init_rubiks(rubiks *cube)
             z_index = 0;
             while (z_index < 3)
             {
-                // printf("coucou[%d][%d][%d]\n", i_index, y_index, z_index);
                 cube->position[i_index][y_index][z_index].side = side;
                 cube->position[i_index][y_index][z_index].color = color;
                 z_index++;
@@ -52,9 +65,8 @@ rubiks    *init_rubiks(rubiks *cube)
     return cube;
 }
 
-char    *find_color(int color)
+char    *find_color(int color) // apply a color on output characters
 {
-    // printf("color[%d]\n", color);
     switch(color)
     {
         case 1:
@@ -101,6 +113,11 @@ void    display_rubiks(rubiks *cube)
 
 }
 
+void print_header(char *str)
+{
+	printf("\033[0;37m-----------\n%s\n-----------\n", str);
+}
+
 int     main(int ac, char **av)
 {
     rubiks *cube;
@@ -115,39 +132,43 @@ int     main(int ac, char **av)
 
     display_rubiks(cube);
     if (is_illegal(cube))
-        printf("illegal cube\n");
+        printf("illegal cube");
+    print_header("Shuffled cube");
+    display_rubiks(cube);
 
-    printf("shuffled cube\n");
-    display_rubiks(cube);
     white_cross(cube);
-    printf("white cross\n");
+    print_header("White cross");
     display_rubiks(cube);
+    
     solve_white_corners(cube); 
-    printf("white corners\n");
+    print_header("White corners");
     display_rubiks(cube); 
+    
     first_two_layers(cube);
-    printf("first_two_layers\n");
-    display_rubiks(cube); 
-    printf("yellow cross\n");
+    print_header("First_two_layers");
+    display_rubiks(cube);
+
     yellow_cross(cube);
+    print_header("Yellow cross");
     display_rubiks(cube);
-    printf("yellow perfect cross\n");
+    
     yellow_edge(cube);
+    print_header("Yellow perfect cross");
     display_rubiks(cube);
-    printf("yellow corners\n");
+    
     yellow_corners(cube);
+    print_header("Yellow corners");
     display_rubiks(cube);
-    printf("finish cube\n");
+    
     perfect_yellow_side(cube);
+    print_header("Finish cube");
     display_rubiks(cube);
-    printf("grey cube\n");
+    
+    print_header("Grey cube");
     applyGreyOnCube(cube);
     display_rubiks(cube);
 
-
-
-    free(cube);
-
+    freeCube(cube); // free all alocated memory
 
     return (0);
 }
