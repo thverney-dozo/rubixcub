@@ -35,12 +35,12 @@ typedef struct  rubiks
 int select_color(T_COLOR color);
 
 char    *shuffle_generator(int moves);
-rubiks  *shuffle_cube(rubiks *cube, char *shuffle);
+rubiks  *scramble_rubiks(rubiks *cube, char *shuffle);
 void    display_rubiks(rubiks *cube);
-void    applyGreyOnCube(rubiks *cube);
+void    blank_rubiks(rubiks *cube);
 bool    is_illegal(rubiks *cube);
 
-
+// resolution
 void    white_cross(rubiks *cube);
 void    solve_white_corners(rubiks *cube);
 void    first_two_layers(rubiks *cube);
@@ -49,19 +49,28 @@ void    yellow_edge(rubiks *cube);
 void    yellow_corners(rubiks *cube);
 void    perfect_yellow_side(rubiks *cube);
 
+
 t_match    find_match(rubiks *cube, int i, int y, int z);
+
+// rotation
 void    rot_side(int i, rubiks *cube);
-void    rot_UP(rubiks *cube);
-void    rot_UP_C(rubiks *cube);
-void    rot_DOWN(rubiks *cube);
-void    rot_DOWN_C(rubiks *cube);
-void    rot_LEFT(rubiks *cube);
-void    rot_LEFT_C(rubiks *cube);
-void    rot_FRONT(rubiks *cube);
-void    rot_FRONT_C(rubiks *cube);
-void    rot_RIGHT(rubiks *cube);
-void    rot_RIGHT_C(rubiks *cube);
-void    rot_BACK(rubiks *cube);
-void    rot_BACK_C(rubiks *cube);
+
+void    UP_clockwise(rubiks *cube);
+void    UP_anticlockwise(rubiks *cube);
+
+void    DOWN_clockwise(rubiks *cube);
+void    DOWN_anticlockwise(rubiks *cube);
+
+void    LEFT_clockwise(rubiks *cube);
+void    LEFT_anticlockwise(rubiks *cube);
+
+void    FRONT_clockwise(rubiks *cube);
+void    FRONT_anticlockwise(rubiks *cube);
+
+void    RIGHT_clockwise(rubiks *cube);
+void    RIGHT_anticlockwise(rubiks *cube);
+
+void    BACK_clockwise(rubiks *cube);
+void    BACK_anticlockwise(rubiks *cube);
 
 #endif
