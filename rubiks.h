@@ -39,6 +39,7 @@ rubiks  *scramble_rubiks(rubiks *cube, char *shuffle);
 void    display_rubiks(rubiks *cube);
 void    blank_rubiks(rubiks *cube);
 bool    is_illegal(rubiks *cube);
+void    exec_moves(char *instruction, rubiks *c);
 
 // resolution
 void    white_cross(rubiks *cube);
@@ -50,7 +51,7 @@ void    yellow_corners(rubiks *cube);
 void    perfect_yellow_side(rubiks *cube);
 
 
-t_match    find_match(rubiks *cube, int i, int y, int z);
+t_match    find_match(int i, int y, int z);
 
 // rotation
 void    rot_side(int i, rubiks *cube);

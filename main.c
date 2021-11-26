@@ -86,30 +86,31 @@ char    *fcolor(int color) // apply a color on output characters
     }
 }
 
-void    display_rubiks(rubiks *cube)
+char *cdisp(int i, int j, int k, rubiks *c)
 {
-    printf("    %s#%s#%s#\n", fcolor(select_color(cube->position[0][0][0].color)), fcolor(select_color(cube->position[0][0][1].color)), fcolor(select_color(cube->position[0][0][2].color)));
-    printf("    %s#%s#%s#\n", fcolor(select_color(cube->position[0][1][0].color)), fcolor(select_color(cube->position[0][1][1].color)), fcolor(select_color(cube->position[0][1][2].color)));
-    printf("    %s#%s#%s#\n", fcolor(select_color(cube->position[0][2][0].color)), fcolor(select_color(cube->position[0][2][1].color)), fcolor(select_color(cube->position[0][2][2].color)));
-    
-    printf("%s#%s#%s# ", fcolor(select_color(cube->position[1][0][0].color)), fcolor(select_color(cube->position[1][0][1].color)), fcolor(select_color(cube->position[1][0][2].color)));
-    printf("%s#%s#%s# ", fcolor(select_color(cube->position[2][0][0].color)), fcolor(select_color(cube->position[2][0][1].color)), fcolor(select_color(cube->position[2][0][2].color)));
-    printf("%s#%s#%s# ", fcolor(select_color(cube->position[3][0][0].color)), fcolor(select_color(cube->position[3][0][1].color)), fcolor(select_color(cube->position[3][0][2].color)));
-    printf("%s#%s#%s#\n", fcolor(select_color(cube->position[4][0][0].color)), fcolor(select_color(cube->position[4][0][1].color)), fcolor(select_color(cube->position[4][0][2].color)));
-    
-    printf("%s#%s#%s# ", fcolor(select_color(cube->position[1][1][0].color)), fcolor(select_color(cube->position[1][1][1].color)), fcolor(select_color(cube->position[1][1][2].color)));
-    printf("%s#%s#%s# ", fcolor(select_color(cube->position[2][1][0].color)), fcolor(select_color(cube->position[2][1][1].color)), fcolor(select_color(cube->position[2][1][2].color)));
-    printf("%s#%s#%s# ", fcolor(select_color(cube->position[3][1][0].color)), fcolor(select_color(cube->position[3][1][1].color)), fcolor(select_color(cube->position[3][1][2].color)));
-    printf("%s#%s#%s#\n", fcolor(select_color(cube->position[4][1][0].color)), fcolor(select_color(cube->position[4][1][1].color)), fcolor(select_color(cube->position[4][1][2].color)));
-    
-    printf("%s#%s#%s# ", fcolor(select_color(cube->position[1][2][0].color)), fcolor(select_color(cube->position[1][2][1].color)), fcolor(select_color(cube->position[1][2][2].color)));
-    printf("%s#%s#%s# ", fcolor(select_color(cube->position[2][2][0].color)), fcolor(select_color(cube->position[2][2][1].color)), fcolor(select_color(cube->position[2][2][2].color)));
-    printf("%s#%s#%s# ", fcolor(select_color(cube->position[3][2][0].color)), fcolor(select_color(cube->position[3][2][1].color)), fcolor(select_color(cube->position[3][2][2].color)));
-    printf("%s#%s#%s#\n", fcolor(select_color(cube->position[4][2][0].color)), fcolor(select_color(cube->position[4][2][1].color)), fcolor(select_color(cube->position[4][2][2].color)));
-    
-    printf("    %s#%s#%s#\n", fcolor(select_color(cube->position[5][0][0].color)), fcolor(select_color(cube->position[5][0][1].color)), fcolor(select_color(cube->position[5][0][2].color)));
-    printf("    %s#%s#%s#\n", fcolor(select_color(cube->position[5][1][0].color)), fcolor(select_color(cube->position[5][1][1].color)), fcolor(select_color(cube->position[5][1][2].color)));
-    printf("    %s#%s#%s#\n\n", fcolor(select_color(cube->position[5][2][0].color)), fcolor(select_color(cube->position[5][2][1].color)), fcolor(select_color(cube->position[5][2][2].color)));
+	return fcolor(select_color(c->position[i][j][k].color));
+}
+
+void    display_rubiks(rubiks *c)
+{
+    printf("\n    %s#%s#%s#\n", cdisp(0,0,0,c), cdisp(0,0,1,c), cdisp(0,0,2,c));
+    printf("    %s#%s#%s#\n", cdisp(0,1,0,c), cdisp(0,1,1,c), cdisp(0,1,2,c));
+    printf("    %s#%s#%s#\n", cdisp(0,2,0,c), cdisp(0,2,1,c), cdisp(0,2,2,c));
+    printf("%s#%s#%s# ", cdisp(1,0,0,c), cdisp(1,0,1,c), cdisp(1,0,2,c));
+    printf("%s#%s#%s# ", cdisp(2,0,0,c), cdisp(2,0,1,c), cdisp(2,0,2,c));
+    printf("%s#%s#%s# ", cdisp(3,0,0,c), cdisp(3,0,1,c), cdisp(3,0,2,c));
+    printf("%s#%s#%s#\n", cdisp(4,0,0,c), cdisp(4,0,1,c), cdisp(4,0,2,c));
+    printf("%s#%s#%s# ", cdisp(1,1,0,c), cdisp(1,1,1,c), cdisp(1,1,2,c));
+    printf("%s#%s#%s# ", cdisp(2,1,0,c), cdisp(2,1,1,c), cdisp(2,1,2,c));
+    printf("%s#%s#%s# ", cdisp(3,1,0,c), cdisp(3,1,1,c), cdisp(3,1,2,c));
+    printf("%s#%s#%s#\n", cdisp(4,1,0,c), cdisp(4,1,1,c), cdisp(4,1,2,c));
+    printf("%s#%s#%s# ", cdisp(1,2,0,c), cdisp(1,2,1,c), cdisp(1,2,2,c));
+    printf("%s#%s#%s# ", cdisp(2,2,0,c), cdisp(2,2,1,c), cdisp(2,2,2,c));
+    printf("%s#%s#%s# ", cdisp(3,2,0,c), cdisp(3,2,1,c), cdisp(3,2,2,c));
+    printf("%s#%s#%s#\n", cdisp(4,2,0,c), cdisp(4,2,1,c), cdisp(4,2,2,c));
+    printf("    %s#%s#%s#\n", cdisp(5,0,0,c), cdisp(5,0,1,c), cdisp(5,0,2,c));
+    printf("    %s#%s#%s#\n", cdisp(5,1,0,c), cdisp(5,1,1,c), cdisp(5,1,2,c));
+    printf("    %s#%s#%s#\n\n", cdisp(5,2,0,c), cdisp(5,2,1,c), cdisp(5,2,2,c));
 
 }
 
@@ -137,18 +138,11 @@ void	custom_execution(rubiks *c)
             {
                 char *shuffle = shuffle_generator(30);
                 c = scramble_rubiks(c, shuffle);
-                display_rubiks(c);
             }
             else if (a==2)
-            {
                 init_rubiks(c);
-                display_rubiks(c);
-            }
             else if(a==3)
-            {
                 blank_rubiks(c);
-                display_rubiks(c);
-                }
             else if(a==4)
             {
                 do
@@ -162,231 +156,63 @@ void	custom_execution(rubiks *c)
                     printf(" 1: 1/4   2: 1/2 \n ");
                     printf("rotation de combien de tour?\n");
                     scanf("%d",&r);
-                    if(x==1)
-                    {
+                    if(x==1) {
                         if(p==1)
-                        {
-                            if(r==1)
-                            {
-                                BACK_clockwise(c);
-                                display_rubiks(c);
-                            }
-                            else
-                            {
-                                BACK_clockwise(c);
-                                BACK_clockwise(c);
-                                display_rubiks(c);
-                            }
-                        }
+							r == 1 ? BACK_clockwise(c): exec_moves("B2", c);
                         else
-                        {
-                            if(r==1)
-                            {
-                                BACK_anticlockwise(c);
-                                display_rubiks(c);
-                            }
-                            else
-                            {
-                                BACK_anticlockwise(c);
-                                BACK_anticlockwise(c);
-                                display_rubiks(c);
-                            }
-                        }
+							r == 1 ? BACK_anticlockwise(c): exec_moves("B2", c);
                     }
-                    else if(x==2)
-                    {
+                    else if(x==2) {
                         if(p==1)
-                        {
-                            if(r==1)
-                            {
-                                FRONT_clockwise(c);
-                                display_rubiks(c);
-                            }
-                            else
-                            {
-                                FRONT_clockwise(c);
-                                FRONT_clockwise(c);
-                                display_rubiks(c);
-                            }
-                        }
+							r == 1 ? FRONT_clockwise(c): exec_moves("F2", c);
                         else
-                        {
-                            if(r==1)
-                            {
-                                FRONT_anticlockwise(c);
-                                display_rubiks(c);
-                            }
-                            else
-                            {
-                                FRONT_anticlockwise(c);
-                                FRONT_anticlockwise(c);
-                                display_rubiks(c);
-                            }
-                        }
+							r == 1 ? FRONT_anticlockwise(c): exec_moves("F2", c);
                     }
-                    else if(x==3)
-                    {
+                    else if(x==3) {
                         if(p==1)
-                        {
-                            if(r==1)
-                            {
-                                UP_clockwise(c);
-                                display_rubiks(c);
-                            }
-                            else
-                            {
-                                UP_clockwise(c);
-                                UP_clockwise(c);
-                                display_rubiks(c);
-                            }
-                        }
+							r == 1 ? UP_clockwise(c): exec_moves("U2", c);
                         else
-                        {
-                            if(r==1)
-                            {
-                                UP_anticlockwise(c);
-                                display_rubiks(c);
-                            }
-                            else
-                            {
-                                UP_anticlockwise(c);
-                                UP_anticlockwise(c);
-                                display_rubiks(c);
-                            }
-                        }
+							r == 1 ? UP_anticlockwise(c): exec_moves("U2", c);
                     }
-                    else if(x==4)
-                    {
+                    else if(x==4) {
                         if(p==1)
-                        {
-                            if(r==1)
-                            {
-                                DOWN_clockwise(c);
-                                display_rubiks(c);
-                            }
-                            else
-                            {
-                                DOWN_clockwise(c);
-                                DOWN_clockwise(c);
-                                display_rubiks(c);
-                            }
-                        }
+							r == 1 ? DOWN_clockwise(c): exec_moves("D2", c);
                         else
-                        {
-                            if(r==1)
-                            {
-                                DOWN_anticlockwise(c);
-                                display_rubiks(c);
-                            }
-                            else
-                            {
-                                DOWN_anticlockwise(c);
-                                DOWN_anticlockwise(c);
-                                display_rubiks(c);
-                            }
-                        }
+							r == 1 ? DOWN_anticlockwise(c): exec_moves("D2", c);
                     }
-                    else if(x==5)
-                    {
+                    else if(x==5) {
                         if(p==1)
-                        {
-                            if(r==1)
-                            {
-                                RIGHT_clockwise(c);
-                                display_rubiks(c);
-                            }
-                            else
-                            {
-                                RIGHT_clockwise(c);
-                                RIGHT_clockwise(c);
-                                display_rubiks(c);
-                            }
-                        }
+							r == 1 ? RIGHT_clockwise(c): exec_moves("R2", c);
                         else
-                        {
-                            if(r==1)
-                            {
-                                RIGHT_anticlockwise(c);
-                                display_rubiks(c);
-                            }
-                            else
-                            {
-                                RIGHT_anticlockwise(c);
-                                RIGHT_anticlockwise(c);
-                                display_rubiks(c);
-                            }
-                        }
+							r == 1 ? RIGHT_anticlockwise(c): exec_moves("R2", c);
                     }
-                    else if(x==6)
-                    {
+                    else if(x==6) {
                         if(p==1)
-                        {
-                            if(r==1)
-                            {
-                                LEFT_clockwise(c);
-                                display_rubiks(c);
-                            }
-                            else
-                            {
-                                LEFT_clockwise(c);
-                                LEFT_clockwise(c);
-                                display_rubiks(c);
-                            }
-                        }
+							r == 1 ? LEFT_clockwise(c): exec_moves("L2", c);
                         else
-                        {
-                            if(r==1)
-                            {
-                                LEFT_anticlockwise(c);
-                                display_rubiks(c);
-                            }
-                            else
-                            {
-                                LEFT_anticlockwise(c);
-                                LEFT_anticlockwise(c);
-                                display_rubiks(c);
-                            }
-                        }
+							r == 1 ? LEFT_anticlockwise(c): exec_moves("L2", c);
                     }
+					display_rubiks(c);
                 }
                 while(x!=7);
-                display_rubiks(c);
             }
             else if(a==5)
             {
-				white_cross(c);
-				print_header("White cross");
-				display_rubiks(c);
-				
-				solve_white_corners(c); 
-				print_header("White corners");
-				display_rubiks(c); 
-				
-				first_two_layers(c);
-				print_header("First_two_layers");
-				display_rubiks(c);
-
-				yellow_cross(c);
-				print_header("Yellow cross");
-				display_rubiks(c);
-				
-				yellow_edge(c);
-				print_header("Yellow perfect cross");
-				display_rubiks(c);
-				
-				yellow_corners(c);
-				print_header("Yellow corners");
-				display_rubiks(c);
-				
-				perfect_yellow_side(c);
-				print_header("Finish cube");
-				display_rubiks(c);
+				white_cross(c); 		print_header("White cross"); 		display_rubiks(c);
+				solve_white_corners(c); print_header("White corners"); 		display_rubiks(c); 
+				first_two_layers(c); 	print_header("First_two_layers"); 	display_rubiks(c);
+				yellow_cross(c); 		print_header("Yellow cross"); 		display_rubiks(c);
+				yellow_edge(c); 		print_header("Yellow edges"); 		display_rubiks(c);
+				yellow_corners(c); 		print_header("Yellow corners"); 	display_rubiks(c);
+				perfect_yellow_side(c); print_header("Finish cube"); 		display_rubiks(c);
             }
             else if(a==6)
             {
                 printf("vous quitter le jeu");
                 free_rubiks(c);
             }
+			if (a != 6 )
+				display_rubiks(c);
         }
         while(a!=7);
 		exit (0);
@@ -487,32 +313,30 @@ void	execute_move(char *move, rubiks *c)
 		DOWN_clockwise(c);
 		DOWN_clockwise(c);
 	}
-	// display_rubiks(c);
 }
 
-void solve(rubiks *c)
+void solve(rubiks *c, bool disp)
 {
 	white_cross(c);
-    printf("\nstop1\n");
+	disp ? display_rubiks(c) : 0;
 	solve_white_corners(c); 
-    printf("\nstop2\n");
+	disp ? display_rubiks(c) : 0;
 	first_two_layers(c);
-    printf("\nstop3\n");
+	disp ? display_rubiks(c) : 0;
 	yellow_cross(c);
-    printf("\nstop4\n");
+	disp ? display_rubiks(c) : 0;
 	yellow_edge(c);
-    printf("\nstop5\n");
+	disp ? display_rubiks(c) : 0;
 	yellow_corners(c);
-    printf("\nstop6\n");
+	disp ? display_rubiks(c) : 0;
 	perfect_yellow_side(c);
-    printf("\nstop7\n");
+	disp ? display_rubiks(c) : 0;
 }
 
 void    exec_moves(char *instruction, rubiks *c)
 {
     char tmp[3];
 	tmp[2] = '\0';
-	int space = 0;
 	int j = 0;
 
 	while (*instruction != '\0')
@@ -525,19 +349,23 @@ void    exec_moves(char *instruction, rubiks *c)
 		if (*instruction)
 			instruction++;
 	}
+
 }
 
-void	rubik42_execution(char *instruction, rubiks *c)
+void	rubik42_execution(char *instruction, rubiks *c, bool disp, int random)
 {
 	parse_error(instruction);
 	c = create_rubiks();
 	c = init_rubiks(c);
-	// display_rubiks(c);
+	if (random)
+	{
+		char *shuffle = shuffle_generator(random);
+		c = scramble_rubiks(c, shuffle);
+	}
 	char tmp[3];
 	tmp[2] = '\0';
-	int space = 0;
 	int j = 0;
-
+	
 	while (*instruction != '\0')
 	{
 		j = 0;
@@ -548,17 +376,29 @@ void	rubik42_execution(char *instruction, rubiks *c)
 		if (*instruction)
 			instruction++;
 	}
-	solve(c);
+	printf("\nSTART SOLVING\n");
+	solve(c, disp);
+	free_rubiks(c); // free all alocated memory
 }
 
 int     main(int ac, char **av)
 {
-    rubiks *c;
+    rubiks *c = NULL;
 
-	if (ac > 2)
-		fatal("Error number of arguments\n", -1);
-	if (ac == 2)
-		rubik42_execution(av[1], c);
+	// if (ac > 2)
+	// 	fatal("Error number of arguments\n", -1);
+	if (ac >= 2)
+	{
+		bool display = false;
+		int random = 0;
+		if (ac >= 2 && av[2] && !strcmp(av[2], "-d"))
+			display = true;
+		if (ac > 2 && av[2] && strcmp(av[2], "0") && atoi(av[2]) != 0)
+			random = atoi(av[2]);
+		if (ac > 2 && av[3] && strcmp(av[3], "0") && atoi(av[3]) != 0)
+			random = atoi(av[3]);
+		rubik42_execution(av[1], c, display, random);
+	}
 	else if (ac == 1)
 		custom_execution(c);
 

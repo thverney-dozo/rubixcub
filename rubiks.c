@@ -69,7 +69,7 @@ char    *shuffle_generator(int moves) // create a "random" litteral pattern
 
 rubiks  *scramble_rubiks(rubiks *c, char *shuffle) // apply the string pattern with rotation to the c
 {
-    for (int i = 1; i <= strlen(shuffle); i++)
+    for (size_t i = 1; i <= strlen(shuffle); i++)
     {
         switch (shuffle[i])
         {
@@ -161,7 +161,7 @@ bool    is_illegal(rubiks *c) // check if the c has an illegal stat
         {
             for (int z = 0; z < 3; z++)
             {
-                m = find_match(c, i,y,z);
+                m = find_match(i,y,z);
                 if (m.i[0] == -1 && p[i][y][z].color == W)
                     w++;
                 else if (m.i[0] == -1 && p[i][y][z].color == O)
@@ -257,7 +257,7 @@ void    UP_clockwise(rubiks *c) // up rotation
     c->position[3][0] = c->position[4][0];
     c->position[4][0] = tmp;
     rot_side(0, c);
-	// printf("U ");
+	printf("U ");
 }
 
 void    UP_anticlockwise(rubiks *c) // reverse up rotation
@@ -265,7 +265,7 @@ void    UP_anticlockwise(rubiks *c) // reverse up rotation
     for (int i = 0; i < 3; i++)
         UP_clockwise(c);
 
-	// printf("U' ");
+	printf("U' ");
 }
 
 void    DOWN_clockwise(rubiks *c) // down rotation
@@ -277,14 +277,14 @@ void    DOWN_clockwise(rubiks *c) // down rotation
     c->position[2][2] = c->position[1][2];
     c->position[1][2] = tmp;
     rot_side(5, c);
-	// printf("D ");
+	printf("D ");
 }
 
 void    DOWN_anticlockwise(rubiks *c) // reverse down rotation
 {
     for (int i = 0; i < 3; i++)
         DOWN_clockwise(c);
-	// printf("D' ");
+	printf("D' ");
 }
 
 void    FRONT_clockwise(rubiks *c) // // front rotation
@@ -314,14 +314,14 @@ void    FRONT_clockwise(rubiks *c) // // front rotation
 
     /* middle inside edges */
     rot_side(2, c);
-	// printf("F ");
+	printf("F ");
 }
 
 void    FRONT_anticlockwise(rubiks *c) // reverse front rotation
 {
     for (int i = 0; i < 3; i++)
         FRONT_clockwise(c);
-	// printf("F' ");
+	printf("F' ");
 }
 
 void    LEFT_clockwise(rubiks *c) // left rotation
@@ -351,14 +351,14 @@ void    LEFT_clockwise(rubiks *c) // left rotation
 
     // /* middle inside edges */
     rot_side(1, c);
-	// printf("L ");
+	printf("L ");
 }
 
 void    LEFT_anticlockwise(rubiks *c) // reverse left rotation
 {
     for (int i = 0; i < 3; i++)
         LEFT_clockwise(c);
-	// printf("L' ");
+	printf("L' ");
 }
 
 void    RIGHT_clockwise(rubiks *c) // right rotation
@@ -388,14 +388,14 @@ void    RIGHT_clockwise(rubiks *c) // right rotation
 
         /* middle inside edges */
     rot_side(3, c);
-	// printf("R ");
+	printf("R ");
 }
 
 void    RIGHT_anticlockwise(rubiks *c) // inverse right rotation
 {
     for (int i = 0; i < 3; i++)
         RIGHT_clockwise(c);
-	// printf("R' ");
+	printf("R' ");
 }
 
 
@@ -424,19 +424,19 @@ void    BACK_clockwise(rubiks *c) // back rotation
     c->position[1][1][0] = c->position[0][0][1];
     c->position[0][0][1] = tmp2;
     rot_side(4, c);
-	// printf("B ");
+	printf("B ");
 }
 
 void    BACK_anticlockwise(rubiks *c) // back inverse rotation
 {
     for (int i = 0; i < 3; i++)
         BACK_clockwise(c);
-	// printf("B' ");
+	printf("B' ");
 }
 
 
 // FINDER
-t_match      match(rubiks *c, int i1, int y1, int z1, int i2, int y2, int z2) // create a matching case structure
+t_match      match(int i1, int y1, int z1, int i2, int y2, int z2) // create a matching case structure
 {
     t_match match;
 
@@ -450,141 +450,111 @@ t_match      match(rubiks *c, int i1, int y1, int z1, int i2, int y2, int z2) //
     return (match);
 }
 
-t_match    find_match(rubiks *c, int i, int y, int z) // return match case of a case and -1 is the default value
+t_match    find_match(int i, int y, int z) // return match case of a case and -1 is the default value
 {
     if (i == 0 && y == 0 && z == 1)
-        return (match(c, 4,0,1, -1,-1,-1));
+        return (match(4,0,1, -1,-1,-1));
     if (i == 4 && y == 0 && z == 1)
-        return (match(c, 0,0,1, -1,-1,-1));
-        
+        return (match(0,0,1, -1,-1,-1));
     if (i == 0 && y == 2 && z == 1)
-        return (match(c, 2,0,1, -1,-1,-1));
+        return (match(2,0,1, -1,-1,-1));
     if (i == 2 && y == 0 && z == 1)
-        return (match(c, 0,2,1, -1,-1,-1));
-        
+        return (match(0,2,1, -1,-1,-1));
     if (i == 2 && y == 1 && z == 0)
-        return (match(c, 1,1,2, -1,-1,-1));
+        return (match(1,1,2, -1,-1,-1));
     if (i == 1 && y == 1 && z == 2)
-        return (match(c, 2,1,0, -1,-1,-1));
-        
+        return (match(2,1,0, -1,-1,-1));
     if (i == 2 && y == 1 && z == 2)
-        return (match(c, 3,1,0, -1,-1,-1));
+        return (match(3,1,0, -1,-1,-1));
     if (i == 3 && y == 1 && z == 0)
-        return (match(c, 2,1,2, -1,-1,-1));
-        
+        return (match(2,1,2, -1,-1,-1));
     if (i == 3 && y == 1 && z == 2)
-        return (match(c, 4,1,0, -1,-1,-1));
+        return (match(4,1,0, -1,-1,-1));
     if (i == 4 && y == 1 && z == 0)
-        return (match(c, 3,1,2, -1,-1,-1));
-        
+        return (match(3,1,2, -1,-1,-1));
     if (i == 5 && y == 0 && z == 1)
-        return (match(c, 2,2,1, -1,-1,-1));
+        return (match(2,2,1, -1,-1,-1));
     if (i == 2 && y == 2 && z == 1)
-        return (match(c, 5,0,1, -1,-1,-1));
-        
+        return (match(5,0,1, -1,-1,-1));
     if (i == 4 && y == 1 && z == 2)
-        return (match(c, 1,1,0, -1,-1,-1));
+        return (match(1,1,0, -1,-1,-1));
     if (i == 1 && y == 1 && z == 0)
-        return (match(c, 4,1,2, -1,-1,-1));
-        
+        return (match(4,1,2, -1,-1,-1));
     if (i == 3 && y == 2 && z == 1)
-        return (match(c, 5,1,2, -1,-1,-1));
+        return (match(5,1,2, -1,-1,-1));
     if (i == 5 && y == 1 && z == 2)
-        return (match(c, 3,2,1, -1,-1,-1));
-        
+        return (match(3,2,1, -1,-1,-1));
     if (i == 1 && y == 2 && z == 1)
-        return (match(c, 5,1,0, -1,-1,-1));
+        return (match(5,1,0, -1,-1,-1));
     if (i == 5 && y == 1 && z == 0)
-        return (match(c, 1,2,1, -1,-1,-1));
-        
+        return (match(1,2,1, -1,-1,-1));
     if (i == 5 && y == 2 && z == 1)
-        return (match(c, 4,2,1, -1,-1,-1));
+        return (match(4,2,1, -1,-1,-1));
     if (i == 4 && y == 2 && z == 1)
-        return (match(c, 5,2,1, -1,-1,-1));
-        
+        return (match(5,2,1, -1,-1,-1));
     if (i == 0 && y == 1 && z == 0)
-        return (match(c, 1,0,1, -1,-1,-1));
+        return (match(1,0,1, -1,-1,-1));
     if (i == 1 && y == 0 && z == 1)
-        return (match(c, 0,1,0, -1,-1,-1));
-        
+        return (match(0,1,0, -1,-1,-1));
     if (i == 0 && y == 1 && z == 2)
-        return (match(c, 3,0,1, -1,-1,-1));
+        return (match(3,0,1, -1,-1,-1));
     if (i == 3 && y == 0 && z == 1)
-        return (match(c, 0,1,2, -1,-1,-1));
-    
-    
+        return (match(0,1,2, -1,-1,-1));
     if (i == 0 && y == 2 && z == 2)
-        return (match(c, 3,0,0, 2,0,2));
+        return (match(3,0,0, 2,0,2));
     if (i == 2 && y == 0 && z == 2)
-        return (match(c, 0,2,2, 3,0,0));
+        return (match(0,2,2, 3,0,0));
     if (i == 3 && y == 0 && z == 0)
-        return (match(c, 2,0,2, 0,2,2));
-        
+        return (match(2,0,2, 0,2,2));
     if (i == 2 && y == 0 && z == 0)
-        return (match(c, 1,0,2, 0,2,0));
+        return (match(1,0,2, 0,2,0));
     if (i == 1 && y == 0 && z == 2)
-        return (match(c, 0,2,0, 2,0,0));
+        return (match(0,2,0, 2,0,0));
     if (i == 0 && y == 2 && z == 0)
-        return (match(c, 2,0,0, 1,0,2));
-        
+        return (match(2,0,0, 1,0,2));
     if (i == 1 && y == 2 && z == 2)
-        return (match(c, 2,2,0, 5,0,0));
+        return (match(2,2,0, 5,0,0));
     if (i == 2 && y == 2 && z == 0)
-        return (match(c, 5,0,0, 1,2,2));
+        return (match(5,0,0, 1,2,2));
     if (i == 5 && y == 0 && z == 0)
-        return (match(c, 1,2,2, 2,2,0));
-
+        return (match(1,2,2, 2,2,0));
     if (i == 2 && y == 2 && z == 2)
-        return (match(c, 3,2,0, 5,0,2));
+        return (match(3,2,0, 5,0,2));
     if (i == 3 && y == 2 && z == 0)
-        return (match(c, 5,0,2, 2,2,2));
+        return (match(5,0,2, 2,2,2));
     if (i == 5 && y == 0 && z == 2)
-        return (match(c, 2,2,2, 3,2,0));
-
+        return (match(2,2,2, 3,2,0));
     if (i == 3 && y == 2 && z == 2)
-        return (match(c, 4,2,0, 5,2,2));
+        return (match(4,2,0, 5,2,2));
     if (i == 4 && y == 2 && z == 0)
-        return (match(c, 5,2,2, 3,2,2));
+        return (match(5,2,2, 3,2,2));
     if (i == 5 && y == 2 && z == 2)
-        return (match(c, 3,2,2, 4,2,0));
-
+        return (match(3,2,2, 4,2,0));
     if (i == 0 && y == 0 && z == 2)
-        return (match(c, 4,0,0, 3,0,2));
+        return (match(4,0,0, 3,0,2));
     if (i == 3 && y == 0 && z == 2)
-        return (match(c, 0,0,2, 4,0,0));
+        return (match(0,0,2, 4,0,0));
     if (i == 4 && y == 0 && z == 0)
-        return (match(c, 3,0,2, 0,0,2));
-
+        return (match(3,0,2, 0,0,2));
     if (i == 0 && y == 0 && z == 2)
-        return (match(c, 4,0,0, 3,0,2));
+        return (match(4,0,0, 3,0,2));
     if (i == 3 && y == 0 && z == 2)
-        return (match(c, 0,0,2, 4,0,0));
+        return (match(0,0,2, 4,0,0));
     if (i == 4 && y == 0 && z == 0)
-        return (match(c, 3,0,2, 0,0,2));
-        
+        return (match(3,0,2, 0,0,2));
     if (i == 0 && y == 0 && z == 0)
-        return (match(c, 1,0,0, 4,0,2));
+        return (match(1,0,0, 4,0,2));
     if (i == 1 && y == 0 && z == 0)
-        return (match(c, 4,0,2, 0,0,0));
+        return (match(4,0,2, 0,0,0));
     if (i == 4 && y == 0 && z == 2)
-        return (match(c, 0,0,0, 1,0,0));
-        
+        return (match(0,0,0, 1,0,0));
     if (i == 1 && y == 2 && z == 0)
-        return (match(c, 5,2,0, 4,2,2));
+        return (match(5,2,0, 4,2,2));
     if (i == 4 && y == 2 && z == 2)
-        return (match(c, 1,2,0, 5,2,0));
+        return (match(1,2,0, 5,2,0));
     if (i == 5 && y == 2 && z == 0)
-        return (match(c, 4,2,2, 1,2,0));
-    return (match(c, -1,-1,-1, -1,-1,-1));
-}
-
-void    double_rot(int side, rubiks *c)
-{
-    if (side == 1) { LEFT_clockwise(c); LEFT_clockwise(c); }
-    if (side == 2) { FRONT_clockwise(c); FRONT_clockwise(c); }
-    if (side == 3) { RIGHT_clockwise(c); RIGHT_clockwise(c); }
-    if (side == 4) { BACK_clockwise(c); BACK_clockwise(c); }
-    if (side == 5) { DOWN_clockwise(c); DOWN_clockwise(c); }
+        return (match(4,2,2, 1,2,0));
+    return (match(-1,-1,-1, -1,-1,-1));
 }
 
 bool    check_white_cross(rubiks *c)
@@ -618,129 +588,49 @@ void    white_cross(rubiks *c)
                     if (y == 0 && z == 1)
                     {
                         if (i == 1)
-                        {
-                            LEFT_clockwise(c);
-                            UP_anticlockwise(c);
-                            FRONT_clockwise(c);
-                            UP_clockwise(c);
-                            FRONT_anticlockwise(c);
-                        }
+							exec_moves("L U' F U F'", c);
                         else if (i == 2)
-                        {
-                            FRONT_clockwise(c);
-                            UP_anticlockwise(c);
-                            RIGHT_clockwise(c);
-                            UP_clockwise(c);
-                            RIGHT_anticlockwise(c);
-                        }
+							exec_moves("F U' R U R'", c);
                         else if (i == 3)
-                        {
-                            RIGHT_clockwise(c);
-                            UP_anticlockwise(c);
-                            BACK_clockwise(c);
-                            UP_clockwise(c);
-                            BACK_anticlockwise(c);
-                        }
+							exec_moves("R U' B U B'", c);
                         else if (i == 4)
-                        {
-                            BACK_clockwise(c);
-                            UP_anticlockwise(c);
-                            LEFT_clockwise(c);
-                            UP_clockwise(c);
-                            LEFT_anticlockwise(c);
-                        }
+							exec_moves("B U' L U L'", c);
                         RIGHT_clockwise(c);
                     }
                     else if (y == 2 && z == 1)
                     {
                         if (i == 1)
-                        {
-                            LEFT_clockwise(c);
-                            BACK_clockwise(c);
-                            DOWN_anticlockwise(c);
-                            BACK_anticlockwise(c);
-                            LEFT_anticlockwise(c);
-                        }
+							exec_moves("L B D' B' L'", c);
                         else if (i == 2)
-                        {
-                            FRONT_clockwise(c);
-                            LEFT_clockwise(c);
-                            DOWN_anticlockwise(c);
-                            LEFT_anticlockwise(c);
-                            FRONT_anticlockwise(c);
-                        }
+							exec_moves("F L D' L' F'", c);
                         else if (i == 3)
-                        {
-                            RIGHT_clockwise(c);
-                            FRONT_clockwise(c);
-                            DOWN_anticlockwise(c);
-                            FRONT_anticlockwise(c);
-                            RIGHT_anticlockwise(c);
-                        }
+							exec_moves("R F D' F' R'", c);
                         else if (i == 4)
-                        {
-                            BACK_clockwise(c);
-                            RIGHT_clockwise(c);
-                            DOWN_anticlockwise(c);
-                            RIGHT_anticlockwise(c);
-                            BACK_anticlockwise(c);
-                        }
+							exec_moves("B R D' R' B'", c);
                     }
                     else if (y == 1)
                     {
                         if (z == 0)
                         {
                             if (i == 1)
-                            {
-                                BACK_clockwise(c);
-                                DOWN_anticlockwise(c);
-                                BACK_anticlockwise(c);
-                            }
+								exec_moves("B D' B'", c);
                             else if (i == 2)
-                            {
-                                LEFT_clockwise(c);
-                                DOWN_anticlockwise(c);
-                                LEFT_anticlockwise(c);
-                            }
+								exec_moves("L D' L'", c);
                             else if (i == 3)
-                            {
-                                FRONT_clockwise(c);
-                                DOWN_anticlockwise(c);
-                                FRONT_anticlockwise(c);
-                            }
+								exec_moves("F D' D'", c);
                             else if (i == 4)
-                            {
-                                RIGHT_clockwise(c);
-                                DOWN_anticlockwise(c);
-                                RIGHT_anticlockwise(c);
-                            }
+								exec_moves("R D' R'", c);
                         }
                         else if (z == 2)
                         {
                             if (i == 1)
-                            {
-                                FRONT_anticlockwise(c);
-                                DOWN_anticlockwise(c);
-                                LEFT_clockwise(c);
-                            }
+								exec_moves("F' D' L", c);
                             else if (i == 2)
-                            {
-                                RIGHT_anticlockwise(c);
-                                DOWN_anticlockwise(c);
-                                RIGHT_clockwise(c);
-                            }
+								exec_moves("R' D' R", c);
                             else if (i == 3)
-                            {
-                                BACK_anticlockwise(c);
-                                DOWN_anticlockwise(c);
-                                BACK_clockwise(c);
-                            }
+								exec_moves("B' D' B", c);
                             else if (i == 4)
-                            {
-                                LEFT_anticlockwise(c);
-                                DOWN_anticlockwise(c);
-                                LEFT_clockwise(c);
-                            }
+								exec_moves("L' D' L", c);
                         }
                     }
                 }
@@ -754,186 +644,94 @@ void    white_cross(rubiks *c)
                                 continue;
                             if (i2 == 0 && (y2 == 1 || z2 == 1) && c->position[i2][y2][z2].color == W)
                             {
-                                match = find_match(c, i2, y2, z2);
+                                match = find_match(i2, y2, z2);
                                 if (c->position[match.i[0]][match.y[0]][match.z[0]].color == O
                                 && match.i[0] != 1)
                                 {
                                     if (match.i[0] == 2)
-                                    {
-                                        double_rot(2, c);
-                                        DOWN_anticlockwise(c);
-                                        double_rot(1, c);
-                                    }
+										exec_moves("F2 D' L2", c);
                                     else if (match.i[0] == 3)
-                                    {
-                                        double_rot(3, c);
-                                        double_rot(5, c);
-                                        double_rot(1, c);
-                                    }
+										exec_moves("R2 D2 L2", c);
                                     else if (match.i[0] == 4)
-                                    {
-                                        double_rot(4, c);
-                                        DOWN_clockwise(c);
-                                        double_rot(1, c);
-                                    }
+										exec_moves("B2 D L2", c);
                                 }
                                 else if (c->position[match.i[0]][match.y[0]][match.z[0]].color == G
                                 && match.i[0] != 2)
                                 {
                                     if (match.i[0] == 1)
-                                    {
-                                        double_rot(1, c);
-                                        DOWN_clockwise(c);
-                                        double_rot(2, c);
-                                    }
+										exec_moves("L2 D F2", c);
                                     else if (match.i[0] == 3)
-                                    {
-                                        double_rot(3, c);
-                                        DOWN_anticlockwise(c);
-                                        double_rot(2, c);
-                                    }
+										exec_moves("R2 D' F2", c);
                                     else if (match.i[0] == 4)
-                                    {
-                                        double_rot(4, c);
-                                        double_rot(5, c);
-                                        double_rot(2, c);
-                                    }
+										exec_moves("B2 D2 F2", c);
                                 }
                                 else if (c->position[match.i[0]][match.y[0]][match.z[0]].color == R
                                 && match.i[0] != 3)
                                 {
                                     if (match.i[0] == 1)
-                                    {
-                                        double_rot(1, c);
-                                        double_rot(5, c);
-                                        double_rot(3, c);
-                                    }
+										exec_moves("L2 D2 R2", c);
                                     else if (match.i[0] == 2)
-                                    {
-                                        double_rot(2, c);
-                                        DOWN_clockwise(c);
-                                        double_rot(3, c);
-                                    }
+										exec_moves("F2 D R2", c);
                                     else if (match.i[0] == 4)
-                                    {
-                                        double_rot(4, c);
-                                        DOWN_anticlockwise(c);
-                                        double_rot(3, c);
-                                    }
+										exec_moves("B2 D' R2", c);
                                 }
                                 else if (c->position[match.i[0]][match.y[0]][match.z[0]].color == B
                                 && match.i[0] != 4)
                                 {
                                     if (match.i[0] == 1)
-                                    {
-                                        double_rot(1, c);
-                                        DOWN_anticlockwise(c);
-                                        double_rot(4, c);
-                                    }
+										exec_moves("L2 D' B2", c);
                                     else if (match.i[0] == 2)
-                                    {
-                                        double_rot(2, c);
-                                        double_rot(5, c);
-                                        double_rot(4, c);
-                                    }
+										exec_moves("F2 D2 B2", c);
                                     else if (match.i[0] == 3)
-                                    {
-                                        double_rot(3, c);
-                                        DOWN_clockwise(c);
-                                        double_rot(4, c);
-                                    }
+										exec_moves("R2 D B2", c);
                                 }
                             }
                             else if (i2 == 5 && (y2 == 1 || z2 == 1) && c->position[i2][y2][z2].color == W)
                             {
-                                match = find_match(c, i2, y2, z2);
+                                match = find_match(i2, y2, z2);
                                 if (c->position[match.i[0]][match.y[0]][match.z[0]].color == O)
                                 {
                                     if (match.i[0] == 1)
-                                    {
-                                        double_rot(1, c);
-                                    }
+										exec_moves("L2", c);
                                     if (match.i[0] == 2)
-                                    {
-                                        DOWN_anticlockwise(c);
-                                        double_rot(1, c);
-                                    }
+										exec_moves("D' L2", c);
                                     if (match.i[0] == 3)
-                                    {
-                                        double_rot(5, c);
-                                        double_rot(1, c);
-                                    }
+										exec_moves("D2 L2", c);
                                     if (match.i[0] == 4)
-                                    {
-                                        DOWN_clockwise(c);
-                                        double_rot(1, c);
-                                    }
+										exec_moves("D L2", c);
                                 }
                                 else if (c->position[match.i[0]][match.y[0]][match.z[0]].color == G)
                                 {
                                     if (match.i[0] == 1)
-                                    {
-                                        DOWN_clockwise(c);
-                                        double_rot(2, c);
-                                    }
+										exec_moves("D F2", c);
                                     if (match.i[0] == 2)
-                                    {
-                                        double_rot(2, c);
-                                    }
+										exec_moves("F2", c);
                                     if (match.i[0] == 3)
-                                    {
-                                        DOWN_anticlockwise(c);
-                                        double_rot(2, c);
-                                    }
+										exec_moves("D' F2", c);
                                     if (match.i[0] == 4)
-                                    {
-                                        double_rot(5, c);
-                                        double_rot(2, c);
-                                    }
+										exec_moves("D2 F2", c);
                                 }
                                 else if (c->position[match.i[0]][match.y[0]][match.z[0]].color == R)
                                 {
                                     if (match.i[0] == 1)
-                                    {
-                                        double_rot(5, c);
-                                        double_rot(3, c);
-                                    }
+										exec_moves("D2 R2", c);
                                     if (match.i[0] == 2)
-                                    {
-                                        DOWN_clockwise(c);
-                                        double_rot(3, c);
-                                    }
+										exec_moves("D R2", c);
                                     if (match.i[0] == 3)
-                                    {
-                                        double_rot(3, c);
-                                    }
+										exec_moves("R2", c);
                                     if (match.i[0] == 4)
-                                    {
-                                        DOWN_anticlockwise(c);
-                                        double_rot(3, c);
-                                    }
+										exec_moves("D' R2", c);
                                 }
                                 else if (c->position[match.i[0]][match.y[0]][match.z[0]].color == B)
                                 {
                                     if (match.i[0] == 1)
-                                    {
-                                        DOWN_anticlockwise(c);
-                                        double_rot(4, c);
-                                    }
+										exec_moves("D' B2", c);
                                     if (match.i[0] == 2)
-                                    {
-                                        double_rot(5, c);
-                                        double_rot(4, c);
-                                    }
+										exec_moves("D2 B2", c);
                                     if (match.i[0] == 3)
-                                    {
-                                        DOWN_clockwise(c);
-                                        double_rot(4, c);
-                                    }
+										exec_moves("D B2", c);
                                     if (match.i[0] == 4)
-                                    {
-                                        double_rot(4, c);
-                                    }
+										exec_moves("B2", c);
                                 }
                             }
                         }
@@ -972,36 +770,35 @@ void    isOnSide(rubiks *c)
     t_pos ***p = c->position;
 
     if (p[2][2][2].color == W && p[5][0][2].color == G && p[3][2][0].color == R)// RED GREEN WHITE
-    {   FRONT_clockwise(c);DOWN_clockwise(c);FRONT_anticlockwise(c); }
+		exec_moves("F D F'", c);
     else if (p[2][2][2].color == R && p[5][0][2].color == W && p[3][2][0].color == G) // RED GREEN WHITE
-    {   RIGHT_anticlockwise(c); DOWN_clockwise(c); DOWN_clockwise(c); RIGHT_clockwise(c); DOWN_clockwise(c); RIGHT_anticlockwise(c); DOWN_anticlockwise(c); RIGHT_clockwise(c);}
+		exec_moves("R' D2 R D R' D' R", c);
     else if (p[2][2][2].color == G && p[5][0][2].color == R && p[3][2][0].color == W) // RED GREEN WHITE
-    {   RIGHT_anticlockwise(c); DOWN_anticlockwise(c); RIGHT_clockwise(c);}
+		exec_moves("R' D' R", c);
     else if (p[1][2][2].color == W && p[5][0][0].color == O && p[2][2][0].color == G) //GREEN ORANGE WHITE
-    {   LEFT_clockwise(c); DOWN_clockwise(c); LEFT_anticlockwise(c);}
+		exec_moves("L D L'", c);
     else if (p[1][2][2].color == G && p[5][0][0].color == W && p[2][2][0].color == O) //GREEN ORANGE WHITE
-    {   FRONT_anticlockwise(c); DOWN_clockwise(c); DOWN_clockwise(c); FRONT_clockwise(c); DOWN_clockwise(c); FRONT_anticlockwise(c); DOWN_anticlockwise(c); FRONT_clockwise(c);}
+		exec_moves("F' D2 F D F' D' F", c);
     else if (p[1][2][2].color == O && p[5][0][0].color == G && p[2][2][0].color == W) //GREEN ORANGE WHITE
-    {   FRONT_anticlockwise(c); DOWN_anticlockwise(c); FRONT_clockwise(c);}
+		exec_moves("F' D' F", c);
     else if (p[3][2][2].color == W && p[5][2][2].color == R && p[4][2][0].color == B) // RED BLUE WHITE
-    {   RIGHT_clockwise(c); DOWN_clockwise(c); RIGHT_anticlockwise(c);}
+		exec_moves("R D R'", c);
     else if (p[3][2][2].color == B && p[5][2][2].color == W && p[4][2][0].color == R) // RED BLUE WHITE
-    {   BACK_anticlockwise(c); DOWN_anticlockwise(c); DOWN_anticlockwise(c); BACK_clockwise(c); DOWN_clockwise(c); BACK_anticlockwise(c); DOWN_anticlockwise(c);  BACK_clockwise(c);}
+		exec_moves("B' D2 B D B' D' B", c);
     else if (p[3][2][2].color == R && p[5][2][2].color == B && p[4][2][0].color == W) // RED BLUE WHITE
-    {   BACK_anticlockwise(c); DOWN_anticlockwise(c);  BACK_clockwise(c);}
+		exec_moves("B' D' B", c);
     else if (p[4][2][2].color == W && p[5][2][0].color == B && p[1][2][0].color == O) // BLUE ORANGE WHITE
-    {   BACK_clockwise(c); DOWN_clockwise(c); BACK_anticlockwise(c); }
+		exec_moves("B D B'", c);
     else if (p[4][2][2].color == O && p[5][2][0].color == W && p[1][2][0].color == B) // BLUE ORANGE WHITE
-    {   LEFT_anticlockwise(c); DOWN_anticlockwise(c); DOWN_anticlockwise(c); LEFT_clockwise(c); DOWN_clockwise(c); LEFT_anticlockwise(c); DOWN_anticlockwise(c); LEFT_clockwise(c); }
+		exec_moves("L' D2 L D L' D' L", c);
     else if (p[4][2][2].color == B && p[5][2][0].color == O && p[1][2][0].color == W) // BLUE ORANGE WHITE
-    {   LEFT_anticlockwise(c); DOWN_anticlockwise(c); LEFT_clockwise(c); }
+		exec_moves("L' D' L", c);
 }
 
 void solve_white_corners(rubiks *c)
 {
     t_pos   ***p = c->position;
     t_match m;
-    T_COLOR tmp1;
     T_COLOR tmp2;
     T_COLOR tmp3;
 
@@ -1010,7 +807,7 @@ void solve_white_corners(rubiks *c)
         for (int i = 0; i < 6; i++) {
             for (int y = 0; y < 3; y++) {
                 for (int z = 0; z < 3; z++) {
-                    m = find_match(c, i, y, z);
+                    m = find_match(i, y, z);
                     if (p[i][y][z].color == W &&  m.i[1] != -1)
                     {
                         if (!isSide(p[m.i[0]][m.y[0]][m.z[0]].color , m.i[0]) || !isSide(p[m.i[1]][m.y[1]][m.z[1]].color, m.i[1]) || !isSide(p[i][y][z].color ,i))
@@ -1021,62 +818,50 @@ void solve_white_corners(rubiks *c)
                                 tmp3 = p[m.i[1]][m.y[1]][m.z[1]].color;
                                 if ((m.i[0] == LEFT || m.i[0] == FRONT || m.i[0] == UP) && (m.i[1] == LEFT || m.i[1] == FRONT || m.i[1] == UP) && (i == LEFT || i == FRONT || i == UP))
                                 {
-                                    FRONT_anticlockwise(c);
-                                    DOWN_anticlockwise(c);
-                                    FRONT_clockwise(c);
-                                    DOWN_clockwise(c);
+									exec_moves("F' D' F D", c);
                                     if (tmp2 == R && tmp3 == G)
-                                        DOWN_clockwise(c);
+                                        exec_moves("D", c);
                                     if (tmp2 == R && tmp3 == B)
-                                        DOWN_clockwise(c);DOWN_clockwise(c);
+                                        exec_moves("D2", c);
                                     if (tmp2 == O && tmp3 == B)
-                                        DOWN_anticlockwise(c);
+                                        exec_moves("D'", c);
                                 }
                                 else if ((m.i[0] == RIGHT || m.i[0] == FRONT || m.i[0] == UP) && (m.i[1] == RIGHT || m.i[1] == FRONT || m.i[1] == UP) && (i == RIGHT || i == FRONT || i == UP))
                                 {
-                                    FRONT_clockwise(c);
-                                    DOWN_clockwise(c);
-                                    FRONT_anticlockwise(c);
-                                    DOWN_anticlockwise(c);
+									exec_moves("F D F' D'", c);
                                     if (tmp2 == O && tmp3 == G)
-                                        DOWN_anticlockwise(c);
+                                        exec_moves("D'", c);
                                     if (tmp2 == R && tmp3 == B)
-                                        DOWN_clockwise(c);
+                                        exec_moves("D", c);
                                     if (tmp2 == O && tmp3 == B)
-                                        DOWN_clockwise(c);DOWN_clockwise(c);
+                                        exec_moves("D2", c);
                                 }
                                 else if ((m.i[0] == LEFT || m.i[0] == BACK || m.i[0] == UP) && (m.i[1] == LEFT || m.i[1] == BACK || m.i[1] == UP) && (i == LEFT || i == BACK || i == UP))
                                 {
-                                    LEFT_anticlockwise(c);
-                                    DOWN_anticlockwise(c);
-                                    LEFT_clockwise(c);
-                                    DOWN_clockwise(c);
+									exec_moves("L' D' L D", c);
                                     if (tmp2 == O && tmp3 == G)
-                                        DOWN_clockwise(c);
+                                        exec_moves("D", c);
                                     if (tmp2 == R && tmp3 == B)
-                                        DOWN_anticlockwise(c);
+                                        exec_moves("D'", c);
                                     if (tmp2 == G && tmp3 == R)
-                                        DOWN_clockwise(c);DOWN_clockwise(c);
+                                        exec_moves("D2", c);
                                 }
                                 else if ((m.i[0] == RIGHT || m.i[0] == BACK || m.i[0] == UP) && (m.i[1] == RIGHT || m.i[1] == BACK || m.i[1] == UP) && (i == RIGHT || i == BACK || i == UP))
                                 {
-                                    RIGHT_clockwise(c);
-                                    DOWN_clockwise(c);
-                                    RIGHT_anticlockwise(c);
-                                    DOWN_anticlockwise(c);
+									exec_moves("R D R' D'", c);
                                     if (tmp2 == O && tmp3 == G)
-                                        DOWN_clockwise(c);DOWN_clockwise(c);
+                                        exec_moves("D2", c);
                                     if (tmp2 == O && tmp3 == B)
-                                        DOWN_clockwise(c);
+                                        exec_moves("D", c);
                                     if (tmp2 == G && tmp3 == R)
-                                        DOWN_anticlockwise(c);
+                                        exec_moves("D'", c);
                                 }
                             }
                         }
                         for (int rot = 0; rot <= 4; rot++)
                         {
                             isOnSide(c);
-                            DOWN_clockwise(c);
+                            exec_moves("D", c);
                         }
                     }
                 }
@@ -1101,21 +886,21 @@ void    isOnTwoLayer(rubiks *c)
 {
     t_pos ***p = c->position;
     if (p[2][2][1].color == G && p[5][0][1].color == R)
-    {   DOWN_anticlockwise(c); RIGHT_anticlockwise(c); DOWN_clockwise(c); RIGHT_clockwise(c); DOWN_clockwise(c); FRONT_clockwise(c); DOWN_anticlockwise(c); FRONT_anticlockwise(c); }
+		exec_moves("D' R' D R D F D' F'", c);
     else if (p[2][2][1].color == G && p[5][0][1].color == O)
-    {   DOWN_clockwise(c); LEFT_clockwise(c); DOWN_anticlockwise(c); LEFT_anticlockwise(c); DOWN_anticlockwise(c); FRONT_anticlockwise(c); DOWN_clockwise(c); FRONT_clockwise(c); }
+		exec_moves("D L D' L' D' F' D F", c);
     else if (p[1][2][1].color == O && p[5][1][0].color == G)
-    {   DOWN_anticlockwise(c); FRONT_anticlockwise(c); DOWN_clockwise(c); FRONT_clockwise(c); DOWN_clockwise(c); LEFT_clockwise(c); DOWN_anticlockwise(c); LEFT_anticlockwise(c); }
+		exec_moves("D' F' D F D L D' L'", c);
     else if (p[1][2][1].color == O && p[5][1][0].color == B)
-    {   DOWN_clockwise(c); BACK_clockwise(c); DOWN_anticlockwise(c); BACK_anticlockwise(c); DOWN_anticlockwise(c); LEFT_anticlockwise(c); DOWN_clockwise(c); LEFT_clockwise(c); }
+		exec_moves("D B D' B' D' L' D L", c);
     else if (p[3][2][1].color == R && p[5][1][2].color == B)
-    {   DOWN_anticlockwise(c); BACK_anticlockwise(c); DOWN_clockwise(c); BACK_clockwise(c); DOWN_clockwise(c); RIGHT_clockwise(c); DOWN_anticlockwise(c); RIGHT_anticlockwise(c); }
+		exec_moves("D' B' D B D R D' R'", c);
     else if (p[3][2][1].color == R && p[5][1][2].color == G)
-    {   DOWN_clockwise(c); FRONT_clockwise(c); DOWN_anticlockwise(c); FRONT_anticlockwise(c); DOWN_anticlockwise(c); RIGHT_anticlockwise(c); DOWN_clockwise(c); RIGHT_clockwise(c); }
+		exec_moves("D F D' F' D' R' D R", c);
     else if (p[4][2][1].color == B && p[5][2][1].color == O)
-    {   DOWN_anticlockwise(c); LEFT_anticlockwise(c); DOWN_clockwise(c); LEFT_clockwise(c); DOWN_clockwise(c); BACK_clockwise(c); DOWN_anticlockwise(c); BACK_anticlockwise(c); }
+		exec_moves("D' L' D L D B D' B'", c);
     else if (p[4][2][1].color == B && p[5][2][1].color == R)
-    {   DOWN_clockwise(c); RIGHT_clockwise(c); DOWN_anticlockwise(c); RIGHT_anticlockwise(c); DOWN_anticlockwise(c); BACK_anticlockwise(c); DOWN_clockwise(c); BACK_clockwise(c); }
+		exec_moves("D R D' R' D' B' D B", c);
 }
 
 void    first_two_layers(rubiks *c)
@@ -1127,32 +912,16 @@ void    first_two_layers(rubiks *c)
         for (int rot = 0; rot <= 4; rot++)
         {
             isOnTwoLayer(c);
-            DOWN_clockwise(c);
+			exec_moves("D", c);
         }
         if (p[1][1][2].color != Y && p[2][1][0].color != Y && !(p[1][1][2].color == O && p[2][1][0].color == G))
-        {
-            FRONT_anticlockwise(c); DOWN_clockwise(c); FRONT_clockwise(c); 
-            DOWN_clockwise(c); LEFT_clockwise(c); DOWN_anticlockwise(c);
-            LEFT_anticlockwise(c);
-        }
+			exec_moves("F' D F D L D' L'", c);
         else if (p[2][1][2].color != Y && p[3][1][0].color != Y && !(p[2][1][2].color == G && p[3][1][0].color == R))
-        {
-            RIGHT_anticlockwise(c); DOWN_clockwise(c); RIGHT_clockwise(c);
-            DOWN_clockwise(c); FRONT_clockwise(c); DOWN_anticlockwise(c);
-            FRONT_anticlockwise(c);
-        }
+			exec_moves("R' D R D F D' F'", c);
         else if (p[3][1][2].color != Y && p[4][1][0].color != Y && !(p[3][1][2].color == R && p[4][1][0].color == B))
-        {
-            BACK_anticlockwise(c); DOWN_clockwise(c); BACK_clockwise(c);
-            DOWN_clockwise(c); RIGHT_clockwise(c); DOWN_anticlockwise(c);
-            RIGHT_anticlockwise(c);
-        }
+			exec_moves("B' D B D R D' R'", c);
         else if (p[4][1][2].color != Y && p[1][1][0].color != Y && !(p[4][1][2].color == B && p[1][1][0].color == O))
-        {
-            LEFT_anticlockwise(c); DOWN_clockwise(c); LEFT_clockwise(c);
-            DOWN_clockwise(c); BACK_clockwise(c); DOWN_anticlockwise(c);
-            BACK_anticlockwise(c);
-        }
+			exec_moves("L' D L D B D' B'", c);
     }
 }
 
@@ -1164,52 +933,19 @@ void    yellow_cross(rubiks *c)
         p[5][1][0].color == Y && p[5][1][2].color == Y)
         return ;
     if (p[5][0][1].color == Y && p[5][1][2].color == Y)
-    {
-        LEFT_clockwise(c); BACK_clockwise(c); DOWN_clockwise(c);
-        BACK_anticlockwise(c); DOWN_anticlockwise(c); LEFT_anticlockwise(c);
-        LEFT_clockwise(c); BACK_clockwise(c); DOWN_clockwise(c);
-        BACK_anticlockwise(c); DOWN_anticlockwise(c); LEFT_anticlockwise(c);
-    }
+		exec_moves("L B D B' D' L' L B D B' D' L'", c);
     else if (p[5][1][2].color == Y && p[5][2][1].color == Y)
-    {
-        FRONT_clockwise(c); LEFT_clockwise(c); DOWN_clockwise(c);
-        LEFT_anticlockwise(c); DOWN_anticlockwise(c); FRONT_anticlockwise(c);
-        FRONT_clockwise(c); LEFT_clockwise(c); DOWN_clockwise(c);
-        LEFT_anticlockwise(c); DOWN_anticlockwise(c); FRONT_anticlockwise(c);
-    }
+		exec_moves("F L D L' D' F' F L D L' D' F'", c);
     else if (p[5][2][1].color == Y && p[5][1][0].color == Y)
-    {
-        RIGHT_clockwise(c); FRONT_clockwise(c); DOWN_clockwise(c);
-        FRONT_anticlockwise(c); DOWN_anticlockwise(c); RIGHT_anticlockwise(c);
-        RIGHT_clockwise(c); FRONT_clockwise(c); DOWN_clockwise(c);
-        FRONT_anticlockwise(c); DOWN_anticlockwise(c); RIGHT_anticlockwise(c);
-    }
+		exec_moves("R F D F' D' R' R F D F' D' R'", c);
     else if (p[5][1][0].color == Y && p[5][0][1].color == Y)
-    {
-        BACK_clockwise(c); RIGHT_clockwise(c); DOWN_clockwise(c);
-        RIGHT_anticlockwise(c); DOWN_anticlockwise(c); BACK_anticlockwise(c);
-        BACK_clockwise(c); RIGHT_clockwise(c); DOWN_clockwise(c);
-        RIGHT_anticlockwise(c); DOWN_anticlockwise(c); BACK_anticlockwise(c);
-    }
+		exec_moves("B R D R' D' B' B R D R' D' B'", c);
     else if (p[5][1][0].color == Y && p[5][1][2].color == Y)
-    {
-        FRONT_clockwise(c); LEFT_clockwise(c); DOWN_clockwise(c);
-        LEFT_anticlockwise(c); DOWN_anticlockwise(c); FRONT_anticlockwise(c);
-    }
+		exec_moves("F L D L' D' F'", c);
     else if (p[5][0][1].color == Y && p[5][2][1].color == Y)
-    {
-        LEFT_clockwise(c); BACK_clockwise(c); DOWN_clockwise(c);
-        BACK_anticlockwise(c); DOWN_anticlockwise(c); LEFT_anticlockwise(c);
-    }
+		exec_moves("L B D B' D' L'", c);
     else if (p[5][0][1].color != Y && p[5][2][1].color != Y && p[5][1][0].color != Y && p[5][1][2].color != Y)
-    {
-        FRONT_clockwise(c); LEFT_clockwise(c); DOWN_clockwise(c);
-        LEFT_anticlockwise(c); DOWN_anticlockwise(c); FRONT_anticlockwise(c);
-        BACK_clockwise(c); RIGHT_clockwise(c); DOWN_clockwise(c);
-        RIGHT_anticlockwise(c); DOWN_anticlockwise(c); BACK_anticlockwise(c);
-        BACK_clockwise(c); RIGHT_clockwise(c); DOWN_clockwise(c);
-        RIGHT_anticlockwise(c); DOWN_anticlockwise(c); BACK_anticlockwise(c);
-    }
+		exec_moves("F L D L' D' F' B R D R' D' B' B R D R' D' B'", c);
 }
 
 bool    isPerfectYellowCross(rubiks *c)
@@ -1232,67 +968,17 @@ void    yellow_edge(rubiks *c)
         if (isPerfectYellowCross(c))
             return ;
         if (p[2][2][1].color == G && p[4][2][1].color == B)
-        {   
-            DOWN_clockwise(c); BACK_clockwise(c); DOWN_clockwise(c); BACK_anticlockwise(c); DOWN_clockwise(c); BACK_clockwise(c);
-            DOWN_clockwise(c); DOWN_clockwise(c); BACK_anticlockwise(c); DOWN_clockwise(c); FRONT_clockwise(c); DOWN_clockwise(c);
-            FRONT_anticlockwise(c); DOWN_clockwise(c); FRONT_clockwise(c); DOWN_clockwise(c); DOWN_clockwise(c);
-            FRONT_anticlockwise(c); DOWN_clockwise(c);
-        }
+			exec_moves("D B D B' D B D2 B' D F D F' D F D2 F' D", c);
         else if (p[1][2][1].color == O && p[3][2][1].color == R)
-        {
-            DOWN_clockwise(c); FRONT_clockwise(c); DOWN_clockwise(c); FRONT_anticlockwise(c); DOWN_clockwise(c); FRONT_clockwise(c);
-            DOWN_clockwise(c); DOWN_clockwise(c); FRONT_anticlockwise(c); DOWN_clockwise(c); BACK_clockwise(c); DOWN_clockwise(c);
-            BACK_anticlockwise(c); DOWN_clockwise(c); BACK_clockwise(c); DOWN_clockwise(c); DOWN_clockwise(c);
-            BACK_anticlockwise(c); DOWN_clockwise(c);
-        }
+			exec_moves("D F D F' D F D2 F' D B D B' D B D2 B' D", c);
         else if (p[1][2][1].color == O && p[2][2][1].color == G)
-        {
-            FRONT_clockwise(c);
-            DOWN_clockwise(c);
-            FRONT_anticlockwise(c);
-            DOWN_clockwise(c);
-            FRONT_clockwise(c);
-            DOWN_clockwise(c);
-            DOWN_clockwise(c);
-            FRONT_anticlockwise(c);
-            DOWN_clockwise(c);
-        }
+			exec_moves("F D F' D F D2 F' D", c);
         else if (p[2][2][1].color == G && p[3][2][1].color == R)
-        {
-            RIGHT_clockwise(c);
-            DOWN_clockwise(c);
-            RIGHT_anticlockwise(c);
-            DOWN_clockwise(c);
-            RIGHT_clockwise(c);
-            DOWN_clockwise(c);
-            DOWN_clockwise(c);
-            RIGHT_anticlockwise(c);
-            DOWN_clockwise(c);
-        }
+			exec_moves("R D R' D R D2 R' D", c);
         else if (p[3][2][1].color == R && p[4][2][1].color == B)
-        {
-            BACK_clockwise(c);
-            DOWN_clockwise(c);
-            BACK_anticlockwise(c);
-            DOWN_clockwise(c);
-            BACK_clockwise(c);
-            DOWN_clockwise(c);
-            DOWN_clockwise(c);
-            BACK_anticlockwise(c);
-            DOWN_clockwise(c);
-        }
+			exec_moves("B D B' D B D2 B' D", c);
         else if (p[4][2][1].color == B && p[1][2][1].color == O)
-        {
-            LEFT_clockwise(c);
-            DOWN_clockwise(c);
-            LEFT_anticlockwise(c);
-            DOWN_clockwise(c);
-            LEFT_clockwise(c);
-            DOWN_clockwise(c);
-            DOWN_clockwise(c);
-            LEFT_anticlockwise(c);
-            DOWN_clockwise(c);
-        }
+			exec_moves("L D L' D L D2 L' D", c);
         if (isPerfectYellowCross(c))
             return ;
         DOWN_clockwise(c);
@@ -1343,65 +1029,18 @@ bool    is_B_O_Y(rubiks *c)
 
 void    yellow_corners(rubiks *c)
 {
-    t_pos ***p = c->position;
-
     if (is_G_O_Y(c) && is_G_R_Y(c) && is_B_R_Y(c) && is_B_O_Y(c))
         return ;
     if (is_G_O_Y(c))
-    {
-        RIGHT_anticlockwise(c);
-        DOWN_clockwise(c);
-        LEFT_clockwise(c);
-        DOWN_anticlockwise(c);
-        RIGHT_clockwise(c);
-        DOWN_clockwise(c);
-        LEFT_anticlockwise(c);
-        DOWN_anticlockwise(c);
-    }
+		exec_moves("R' D L D' R D L' D'", c);
     else if (is_G_R_Y(c))
-    {
-        BACK_anticlockwise(c);
-        DOWN_clockwise(c);
-        FRONT_clockwise(c);
-        DOWN_anticlockwise(c);
-        BACK_clockwise(c);
-        DOWN_clockwise(c);
-        FRONT_anticlockwise(c);
-        DOWN_anticlockwise(c);
-    }
+		exec_moves("B' D F D' B D F' D'", c);
     else if (is_B_R_Y(c))
-    {
-        LEFT_anticlockwise(c);
-        DOWN_clockwise(c);
-        RIGHT_clockwise(c);
-        DOWN_anticlockwise(c);
-        LEFT_clockwise(c);
-        DOWN_clockwise(c);
-        RIGHT_anticlockwise(c);
-        DOWN_anticlockwise(c);
-    }
+		exec_moves("L' D R D' L D R' D'", c);
     else if (is_B_O_Y(c))
-    {
-        FRONT_anticlockwise(c);
-        DOWN_clockwise(c);
-        BACK_clockwise(c);
-        DOWN_anticlockwise(c);
-        FRONT_clockwise(c);
-        DOWN_clockwise(c);
-        BACK_anticlockwise(c);
-        DOWN_anticlockwise(c);
-    }
+		exec_moves("F' D B D' F D B' D'", c);
     else
-    {
-        RIGHT_anticlockwise(c);
-        DOWN_clockwise(c);
-        LEFT_clockwise(c);
-        DOWN_anticlockwise(c);
-        RIGHT_clockwise(c);
-        DOWN_clockwise(c);
-        LEFT_anticlockwise(c);
-        DOWN_anticlockwise(c);
-    }
+		exec_moves("R' D L D' R D L' D'", c);
     yellow_corners(c);
 }
 
@@ -1444,96 +1083,57 @@ bool    is_c_perfect(rubiks *c)
     return (false);
 }
 
-void    combG(rubiks *c) { LEFT_anticlockwise(c); UP_anticlockwise(c); LEFT_clockwise(c); UP_clockwise(c); }
-void    combR(rubiks *c) { FRONT_anticlockwise(c); UP_anticlockwise(c); FRONT_clockwise(c); UP_clockwise(c); }
-void    combB(rubiks *c) { RIGHT_anticlockwise(c); UP_anticlockwise(c); RIGHT_clockwise(c); UP_clockwise(c); }
-void    combO(rubiks *c) { BACK_anticlockwise(c); UP_anticlockwise(c); BACK_clockwise(c); UP_clockwise(c); }
+void    combG(rubiks *c) { exec_moves("L' U' L U", c); }
+void    combR(rubiks *c) { exec_moves("F' U' F U", c); }
+void    combB(rubiks *c) { exec_moves("R' U' R U", c); }
+void    combO(rubiks *c) { exec_moves("B' U' B U", c); }
 
 void    perfect_yellow_side(rubiks *c)
 {
     t_pos ***p = c->position;
+	int indic = 0;
 
     if (is_c_perfect(c))
         return ;
-    if (is_B_R_Y_perfect(c) && is_G_R_Y_perfect(c)) // orange view
-    {
-        combO(c); combO(c); DOWN_anticlockwise(c); combO(c); combO(c); combO(c); combO(c); DOWN_clockwise(c);
-        perfect_yellow_side(c);
-    }
+    if (is_B_R_Y_perfect(c) && is_G_R_Y_perfect(c) && (indic = 1)) // orange view
+		exec_moves("B' U' B U B' U' B U D' B' U' B U B' U' B U B' U' B U B' U' B U D", c);
     else if (!is_B_R_Y_perfect(c) && is_G_R_Y_perfect(c) && !is_B_O_Y_perfect(c) && !is_G_O_Y_perfect(c) && p[4][2][2].color == Y)
-    {
-        combO(c); combO(c); DOWN_clockwise(c); combO(c); combO(c); DOWN_clockwise(c); DOWN_clockwise(c); combO(c); combO(c); DOWN_clockwise(c);
-    }
+		exec_moves("B' U' B U B' U' B U D B' U' B U B' U' B U D2 B' U' B U B' U' B U D", c);
     else if (!is_B_R_Y_perfect(c) && is_G_R_Y_perfect(c) && !is_B_O_Y_perfect(c) && !is_G_O_Y_perfect(c) && p[1][2][0].color == Y)
-    {
-        combO(c); combO(c); combO(c); combO(c); DOWN_clockwise(c); combO(c); combO(c); combO(c); combO(c);
-        DOWN_clockwise(c); DOWN_clockwise(c); combO(c); combO(c); combO(c); combO(c); DOWN_clockwise(c);
-    }
-    else if (!is_B_R_Y_perfect(c) && is_G_R_Y_perfect(c) && is_B_O_Y_perfect(c) && !is_G_O_Y_perfect(c))
-    {
-        DOWN_clockwise(c); combO(c); combO(c); DOWN_clockwise(c); DOWN_clockwise(c); combO(c); combO(c); combO(c); combO(c); DOWN_clockwise(c);   
-        perfect_yellow_side(c);
-    }
-    else if (is_B_O_Y_perfect(c) && is_B_R_Y_perfect(c)) // green view
-    {
-        combG(c); combG(c); DOWN_anticlockwise(c); combG(c); combG(c); combG(c); combG(c); DOWN_clockwise(c);
-        perfect_yellow_side(c);
-    }
+		exec_moves("B' U' B U B' U' B U B' U' B U B' U' B U D B' U' B U B' U' B U B' U' B U B' U' B U D2 B' U' B U B' U' B U B' U' B U B' U' B U D", c);
+    else if (!is_B_R_Y_perfect(c) && is_G_R_Y_perfect(c) && is_B_O_Y_perfect(c) && !is_G_O_Y_perfect(c)  && (indic = 1))
+		exec_moves("D B' U' B U B' U' B U D2 B' U' B U B' U' B U B' U' B U B' U' B U D", c);
+    else if (is_B_O_Y_perfect(c) && is_B_R_Y_perfect(c) && (indic = 1)) // green view
+		exec_moves("L' U' L U L' U' L U D' L' U' L U L' U' L U L' U' L U L' U' L U D", c);
     else if (is_B_R_Y_perfect(c) && !is_G_R_Y_perfect(c) && !is_B_O_Y_perfect(c) && !is_G_O_Y_perfect(c) && p[1][2][2].color == Y)
-    {
-        combG(c); combG(c); DOWN_clockwise(c); combG(c); combG(c);  DOWN_clockwise(c); DOWN_clockwise(c); combG(c); combG(c); DOWN_clockwise(c);
-    }
+		exec_moves("L' U' L U L' U' L U D L' U' L U L' U' L U D2 L' U' L U L' U' L U D", c);
     else if (is_B_R_Y_perfect(c) && !is_G_R_Y_perfect(c) && !is_B_O_Y_perfect(c) && !is_G_O_Y_perfect(c) && p[2][2][0].color == Y)
-    {
-        combG(c); combG(c); combG(c); combG(c);  DOWN_clockwise(c); combG(c); combG(c); combG(c); combG(c);  DOWN_clockwise(c);
-        DOWN_clockwise(c); combG(c); combG(c); combG(c); combG(c); DOWN_clockwise(c);
-    }
-    else if (is_B_R_Y_perfect(c) && !is_G_R_Y_perfect(c) && !is_B_O_Y_perfect(c) && is_G_O_Y_perfect(c))
-    {
-        DOWN_clockwise(c); combG(c); combG(c); DOWN_clockwise(c); DOWN_clockwise(c); combG(c); combG(c);  combG(c); combG(c); DOWN_clockwise(c);   
-        perfect_yellow_side(c);
-    }
-    else if (is_G_O_Y_perfect(c) && is_B_O_Y_perfect(c)) // red view
-    {
-        combR(c); combR(c); DOWN_anticlockwise(c); combR(c); combR(c); combR(c); combR(c); DOWN_clockwise(c);
-        perfect_yellow_side(c);
-    }
+		exec_moves("L' U' L U L' U' L U L' U' L U L' U' L U D L' U' L U L' U' L U L' U' L U L' U' L U D2 L' U' L U L' U' L U L' U' L U L' U' L U D", c);
+    else if (is_B_R_Y_perfect(c) && !is_G_R_Y_perfect(c) && !is_B_O_Y_perfect(c) && is_G_O_Y_perfect(c) && (indic = 1))
+		exec_moves("D L' U' L U L' U' L U D2 L' U' L U L' U' L U L' U' L U L' U' L U D", c);
+    else if (is_G_O_Y_perfect(c) && is_B_O_Y_perfect(c) && (indic = 1)) // red view
+		exec_moves("F' U' F U F' U' F U D' F' U' F U F' U' F U F' U' F U F' U' F U D", c);
     else if (!is_B_R_Y_perfect(c) && !is_G_R_Y_perfect(c) && is_B_O_Y_perfect(c) && !is_G_O_Y_perfect(c) && p[2][2][2].color == Y)
-    {
-        combR(c); combR(c); DOWN_clockwise(c); combR(c); combR(c);  DOWN_clockwise(c); DOWN_clockwise(c); combR(c); combR(c); DOWN_clockwise(c);
-    }
+		exec_moves("F' U' F U F' U' F U D F' U' F U F' U' F U D2 F' U' F U F' U' F U D", c);
     else if (!is_B_R_Y_perfect(c) && !is_G_R_Y_perfect(c) && is_B_O_Y_perfect(c) && !is_G_O_Y_perfect(c) && p[3][2][0].color == Y)
-    {
-        combR(c); combR(c); combR(c); combR(c);  DOWN_clockwise(c); combR(c); combR(c); combR(c); combR(c);  DOWN_clockwise(c);
-        DOWN_clockwise(c); combR(c); combR(c); combR(c); combR(c); DOWN_clockwise(c);
-    }
-    else if (!is_B_R_Y_perfect(c) && is_G_R_Y_perfect(c) && is_B_O_Y_perfect(c) && !is_G_O_Y_perfect(c))
-    {
-        DOWN_clockwise(c); combR(c); combR(c); DOWN_clockwise(c); DOWN_clockwise(c); combR(c); combR(c);  combR(c); combR(c); DOWN_clockwise(c);   
-        perfect_yellow_side(c);
-    }
-    else if (is_G_O_Y_perfect(c) && is_G_R_Y_perfect(c)) // blue view
-    {
-        combB(c); combB(c); DOWN_anticlockwise(c); combB(c); combB(c); combB(c); combB(c); DOWN_clockwise(c);
-        perfect_yellow_side(c);
-    }
+		exec_moves("F' U' F U F' U' F U F' U' F U F' U' F U D F' U' F U F' U' F U F' U' F U F' U' F U D2 F' U' F U F' U' F U F' U' F U F' U' F U D", c);
+    else if (!is_B_R_Y_perfect(c) && is_G_R_Y_perfect(c) && is_B_O_Y_perfect(c) && !is_G_O_Y_perfect(c) && (indic = 1))
+		exec_moves("D F' U' F U F' U' F U D2 F' U' F U F' U' F U F' U' F U F' U' F U D", c);
+    else if (is_G_O_Y_perfect(c) && is_G_R_Y_perfect(c) && (indic = 1)) // blue view
+		exec_moves("R' U' R U R' U' R U D' R' U' R U R' U' R U R' U' R U R' U' R U D", c);
     else if (!is_B_R_Y_perfect(c) && !is_G_R_Y_perfect(c) && !is_B_O_Y_perfect(c) && is_G_O_Y_perfect(c) && p[3][2][2].color == Y)
-    {
-        combB(c); combB(c); DOWN_clockwise(c); combB(c); combB(c);  DOWN_clockwise(c); DOWN_clockwise(c); combB(c); combB(c); DOWN_clockwise(c);
-    }
+		exec_moves("R' U' R U R' U' R U D R' U' R U R' U' R U D2 R' U' R U R' U' R U D", c);
     else if (!is_B_R_Y_perfect(c) && !is_G_R_Y_perfect(c) && !is_B_O_Y_perfect(c) && is_G_O_Y_perfect(c) && p[4][2][0].color == Y)
-    {
-        combB(c); combB(c); combB(c); combB(c);  DOWN_clockwise(c); combB(c); combB(c); combB(c); combB(c);  DOWN_clockwise(c);
-        DOWN_clockwise(c); combB(c); combB(c); combB(c); combB(c); DOWN_clockwise(c);
-    }
-    else if (is_B_R_Y_perfect(c) && !is_G_R_Y_perfect(c) && !is_B_O_Y_perfect(c) && is_G_O_Y_perfect(c))
-    {
-        DOWN_clockwise(c); combB(c); combB(c); DOWN_clockwise(c); DOWN_clockwise(c); combB(c); combB(c);  combB(c); combB(c); DOWN_clockwise(c);   
-        perfect_yellow_side(c);
-    }
+		exec_moves("R' U' R U R' U' R U R' U' R U R' U' R U D R' U' R U R' U' R U R' U' R U R' U' R U D2 R' U' R U R' U' R U R' U' R U R' U' R U D", c);
+    else if (is_B_R_Y_perfect(c) && !is_G_R_Y_perfect(c) && !is_B_O_Y_perfect(c) && is_G_O_Y_perfect(c) && (indic = 1))
+		exec_moves("D R' U' R U R' U' R U D2 R' U' R U R' U' R U R' U' R U R' U' R U D", c);
     else
-    {
+	{
+		indic = 1;
         combR(c); combR(c); DOWN_anticlockwise(c); combR(c); combR(c); combR(c); combR(c); DOWN_clockwise(c);
+	}
+	if (indic)
         perfect_yellow_side(c);
-    }
+	indic = 0;
+
 }
