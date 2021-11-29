@@ -158,39 +158,39 @@ void	custom_execution(rubiks *c)
                     scanf("%d",&r);
                     if(x==1) {
                         if(p==1)
-							r == 1 ? BACK_clockwise(c): exec_moves("B2", c);
+							r == 1 ? BACK_clockwise(c, true): exec_moves("B2", c);
                         else
-							r == 1 ? BACK_anticlockwise(c): exec_moves("B2", c);
+							r == 1 ? BACK_anticlockwise(c, true): exec_moves("B2", c);
                     }
                     else if(x==2) {
                         if(p==1)
-							r == 1 ? FRONT_clockwise(c): exec_moves("F2", c);
+							r == 1 ? FRONT_clockwise(c, true): exec_moves("F2", c);
                         else
-							r == 1 ? FRONT_anticlockwise(c): exec_moves("F2", c);
+							r == 1 ? FRONT_anticlockwise(c, true): exec_moves("F2", c);
                     }
                     else if(x==3) {
                         if(p==1)
-							r == 1 ? UP_clockwise(c): exec_moves("U2", c);
+							r == 1 ? UP_clockwise(c, true): exec_moves("U2", c);
                         else
-							r == 1 ? UP_anticlockwise(c): exec_moves("U2", c);
+							r == 1 ? UP_anticlockwise(c, true): exec_moves("U2", c);
                     }
                     else if(x==4) {
                         if(p==1)
-							r == 1 ? DOWN_clockwise(c): exec_moves("D2", c);
+							r == 1 ? DOWN_clockwise(c, true): exec_moves("D2", c);
                         else
-							r == 1 ? DOWN_anticlockwise(c): exec_moves("D2", c);
+							r == 1 ? DOWN_anticlockwise(c, true): exec_moves("D2", c);
                     }
                     else if(x==5) {
                         if(p==1)
-							r == 1 ? RIGHT_clockwise(c): exec_moves("R2", c);
+							r == 1 ? RIGHT_clockwise(c, true): exec_moves("R2", c);
                         else
-							r == 1 ? RIGHT_anticlockwise(c): exec_moves("R2", c);
+							r == 1 ? RIGHT_anticlockwise(c, true): exec_moves("R2", c);
                     }
                     else if(x==6) {
                         if(p==1)
-							r == 1 ? LEFT_clockwise(c): exec_moves("L2", c);
+							r == 1 ? LEFT_clockwise(c, true): exec_moves("L2", c);
                         else
-							r == 1 ? LEFT_anticlockwise(c): exec_moves("L2", c);
+							r == 1 ? LEFT_anticlockwise(c, true): exec_moves("L2", c);
                     }
 					display_rubiks(c);
                 }
@@ -262,56 +262,56 @@ void	parse_error(char *move)
 	}
 }
 
-void	execute_move(char *move, rubiks *c)
+void	execute_move(char *move, rubiks *c, bool silent)
 {
 	// F R U B L D F' R' U' B' L' D' F2 R2 U2 B2 L2 D2
 	if (strcmp(move, "F") == 0)
-		FRONT_clockwise(c);
+		FRONT_clockwise(c, silent);
 	else if (strcmp(move, "R") == 0)
-		RIGHT_clockwise(c);
+		RIGHT_clockwise(c, silent);
 	else if (strcmp(move, "U") == 0)
-		UP_clockwise(c);
+		UP_clockwise(c, silent);
 	else if (strcmp(move, "B") == 0)
-		BACK_clockwise(c);
+		BACK_clockwise(c, silent);
 	else if (strcmp(move, "L") == 0)
-		LEFT_clockwise(c);
+		LEFT_clockwise(c, silent);
 	else if (strcmp(move, "D") == 0)
-		DOWN_clockwise(c);
+		DOWN_clockwise(c, silent);
 	else if (strcmp(move, "F'") == 0)
-		FRONT_anticlockwise(c);
+		FRONT_anticlockwise(c, silent);
 	else if (strcmp(move, "R'") == 0)
-		RIGHT_anticlockwise(c);
+		RIGHT_anticlockwise(c, silent);
 	else if (strcmp(move, "U'") == 0)
-		UP_anticlockwise(c);
+		UP_anticlockwise(c, silent);
 	else if (strcmp(move, "B'") == 0)
-		BACK_anticlockwise(c);
+		BACK_anticlockwise(c, silent);
 	else if (strcmp(move, "L'") == 0)
-		LEFT_anticlockwise(c);
+		LEFT_anticlockwise(c, silent);
 	else if (strcmp(move, "D'") == 0)
-		DOWN_anticlockwise(c);
+		DOWN_anticlockwise(c, silent);
 	else if (strcmp(move, "F2") == 0) {
-		FRONT_clockwise(c);
-		FRONT_clockwise(c);
+		FRONT_clockwise(c, silent);
+		FRONT_clockwise(c, silent);
 	}
 	else if (strcmp(move, "R2") == 0) {
-		RIGHT_clockwise(c);
-		RIGHT_clockwise(c);
+		RIGHT_clockwise(c, silent);
+		RIGHT_clockwise(c, silent);
 	}
 	else if (strcmp(move, "U2") == 0) {
-		UP_clockwise(c);
-		UP_clockwise(c);
+		UP_clockwise(c, silent);
+		UP_clockwise(c, silent);
 	}
 	else if (strcmp(move, "B2") == 0) {
-		BACK_clockwise(c);
-		BACK_clockwise(c);
+		BACK_clockwise(c, silent);
+		BACK_clockwise(c, silent);
 	}
 	else if (strcmp(move, "L2") == 0) {
-		LEFT_clockwise(c);
-		LEFT_clockwise(c);
+		LEFT_clockwise(c, silent);
+		LEFT_clockwise(c, silent);
 	}
 	else if (strcmp(move, "D2") == 0) {
-		DOWN_clockwise(c);
-		DOWN_clockwise(c);
+		DOWN_clockwise(c, silent);
+		DOWN_clockwise(c, silent);
 	}
 }
 
@@ -344,7 +344,7 @@ void    exec_moves(char *instruction, rubiks *c)
 		j = 0;
 		while (*instruction && *instruction != ' ')
 			tmp[j++] = *(instruction++);
-		execute_move(tmp, c);
+		execute_move(tmp, c, false);
 		bzero(&tmp, sizeof(tmp));
 		if (*instruction)
 			instruction++;
@@ -371,12 +371,11 @@ void	rubik42_execution(char *instruction, rubiks *c, bool disp, int random)
 		j = 0;
 		while (*instruction && *instruction != ' ')
 			tmp[j++] = *(instruction++);
-		execute_move(tmp, c);
+		execute_move(tmp, c, true);
 		bzero(&tmp, sizeof(tmp));
 		if (*instruction)
 			instruction++;
 	}
-	printf("\nSTART SOLVING\n");
 	solve(c, disp);
 	free_rubiks(c); // free all alocated memory
 }

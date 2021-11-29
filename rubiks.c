@@ -74,40 +74,40 @@ rubiks  *scramble_rubiks(rubiks *c, char *shuffle) // apply the string pattern w
         switch (shuffle[i])
         {
             case 'l':
-                LEFT_clockwise(c);
+                LEFT_clockwise(c, true);
                 break;
             case 'L':
-                LEFT_anticlockwise(c);
+                LEFT_anticlockwise(c, true);
                 break;
             case 'r':
-                RIGHT_clockwise(c);
+                RIGHT_clockwise(c, true);
                 break;
             case 'R':
-                RIGHT_anticlockwise(c);
+                RIGHT_anticlockwise(c, true);
                 break;
             case 'd':
-                DOWN_clockwise(c);
+                DOWN_clockwise(c, true);
                 break;
             case 'D':
-                DOWN_anticlockwise(c);
+                DOWN_anticlockwise(c, true);
                 break;
             case 'u':
-                UP_clockwise(c);
+                UP_clockwise(c, true);
                 break;
             case 'U':
-                UP_anticlockwise(c);
+                UP_anticlockwise(c, true);
                 break;
             case 'b':
-                BACK_clockwise(c);
+                BACK_clockwise(c, true);
                 break;
             case 'B':
-                BACK_anticlockwise(c);
+                BACK_anticlockwise(c, true);
                 break;
             case 'f':
-                FRONT_clockwise(c);
+                FRONT_clockwise(c, true);
                 break;
             case 'F':
-                FRONT_anticlockwise(c);
+                FRONT_anticlockwise(c, true);
                 break;
         }
     }
@@ -247,7 +247,7 @@ void    rot_side(int i, rubiks *c) // clockwise rotation on a side
     c->position[i][0][1] = tmp;
 }
 
-void    UP_clockwise(rubiks *c) // up rotation 
+void    UP_clockwise(rubiks *c, bool silent) // up rotation 
 {
     t_pos *tmp;
 
@@ -257,18 +257,20 @@ void    UP_clockwise(rubiks *c) // up rotation
     c->position[3][0] = c->position[4][0];
     c->position[4][0] = tmp;
     rot_side(0, c);
-	printf("U ");
+	if (!silent)
+		printf("U ");
 }
 
-void    UP_anticlockwise(rubiks *c) // reverse up rotation
+void    UP_anticlockwise(rubiks *c, bool silent) // reverse up rotation
 {
     for (int i = 0; i < 3; i++)
-        UP_clockwise(c);
+        UP_clockwise(c, true);
 
-	printf("U' ");
+	if (!silent)
+		printf("U' ");
 }
 
-void    DOWN_clockwise(rubiks *c) // down rotation
+void    DOWN_clockwise(rubiks *c, bool silent) // down rotation
 {
     t_pos *tmp;
     tmp = c->position[4][2];
@@ -277,17 +279,19 @@ void    DOWN_clockwise(rubiks *c) // down rotation
     c->position[2][2] = c->position[1][2];
     c->position[1][2] = tmp;
     rot_side(5, c);
-	printf("D ");
+	if (!silent)
+		printf("D ");
 }
 
-void    DOWN_anticlockwise(rubiks *c) // reverse down rotation
+void    DOWN_anticlockwise(rubiks *c, bool silent) // reverse down rotation
 {
     for (int i = 0; i < 3; i++)
-        DOWN_clockwise(c);
-	printf("D' ");
+        DOWN_clockwise(c, true);
+	if (!silent)
+		printf("D' ");
 }
 
-void    FRONT_clockwise(rubiks *c) // // front rotation
+void    FRONT_clockwise(rubiks *c, bool silent) // // front rotation
 {
     t_pos tmp2;
 
@@ -314,17 +318,19 @@ void    FRONT_clockwise(rubiks *c) // // front rotation
 
     /* middle inside edges */
     rot_side(2, c);
-	printf("F ");
+	if (!silent)
+		printf("F ");
 }
 
-void    FRONT_anticlockwise(rubiks *c) // reverse front rotation
+void    FRONT_anticlockwise(rubiks *c, bool silent) // reverse front rotation
 {
     for (int i = 0; i < 3; i++)
-        FRONT_clockwise(c);
-	printf("F' ");
+        FRONT_clockwise(c, true);
+	if (!silent)
+		printf("F' ");
 }
 
-void    LEFT_clockwise(rubiks *c) // left rotation
+void    LEFT_clockwise(rubiks *c, bool silent) // left rotation
 {
     t_pos tmp2;
 
@@ -351,17 +357,19 @@ void    LEFT_clockwise(rubiks *c) // left rotation
 
     // /* middle inside edges */
     rot_side(1, c);
-	printf("L ");
+	if (!silent)
+		printf("L ");
 }
 
-void    LEFT_anticlockwise(rubiks *c) // reverse left rotation
+void    LEFT_anticlockwise(rubiks *c, bool silent) // reverse left rotation
 {
     for (int i = 0; i < 3; i++)
-        LEFT_clockwise(c);
-	printf("L' ");
+        LEFT_clockwise(c, true);
+	if (!silent)
+		printf("L' ");
 }
 
-void    RIGHT_clockwise(rubiks *c) // right rotation
+void    RIGHT_clockwise(rubiks *c, bool silent) // right rotation
 {
     t_pos tmp2;
 
@@ -388,18 +396,20 @@ void    RIGHT_clockwise(rubiks *c) // right rotation
 
         /* middle inside edges */
     rot_side(3, c);
-	printf("R ");
+	if (!silent)
+		printf("R ");
 }
 
-void    RIGHT_anticlockwise(rubiks *c) // inverse right rotation
+void    RIGHT_anticlockwise(rubiks *c, bool silent) // inverse right rotation
 {
     for (int i = 0; i < 3; i++)
-        RIGHT_clockwise(c);
-	printf("R' ");
+        RIGHT_clockwise(c, true);
+	if (!silent)
+		printf("R' ");
 }
 
 
-void    BACK_clockwise(rubiks *c) // back rotation
+void    BACK_clockwise(rubiks *c, bool silent) // back rotation
 {
     t_pos tmp2;
 
@@ -424,14 +434,16 @@ void    BACK_clockwise(rubiks *c) // back rotation
     c->position[1][1][0] = c->position[0][0][1];
     c->position[0][0][1] = tmp2;
     rot_side(4, c);
-	printf("B ");
+	if (!silent)
+		printf("B ");
 }
 
-void    BACK_anticlockwise(rubiks *c) // back inverse rotation
+void    BACK_anticlockwise(rubiks *c, bool silent) // back inverse rotation
 {
     for (int i = 0; i < 3; i++)
-        BACK_clockwise(c);
-	printf("B' ");
+        BACK_clockwise(c, true);
+	if (!silent)
+		printf("B' ");
 }
 
 
@@ -595,7 +607,7 @@ void    white_cross(rubiks *c)
 							exec_moves("R U' B U B'", c);
                         else if (i == 4)
 							exec_moves("B U' L U L'", c);
-                        RIGHT_clockwise(c);
+                        RIGHT_clockwise(c, true);
                     }
                     else if (y == 2 && z == 1)
                     {
@@ -981,7 +993,7 @@ void    yellow_edge(rubiks *c)
 			exec_moves("L D L' D L D2 L' D", c);
         if (isPerfectYellowCross(c))
             return ;
-        DOWN_clockwise(c);
+        DOWN_clockwise(c, true);
     }
 }
 
@@ -1130,7 +1142,7 @@ void    perfect_yellow_side(rubiks *c)
     else
 	{
 		indic = 1;
-        combR(c); combR(c); DOWN_anticlockwise(c); combR(c); combR(c); combR(c); combR(c); DOWN_clockwise(c);
+        combR(c); combR(c); DOWN_anticlockwise(c, true); combR(c); combR(c); combR(c); combR(c); DOWN_clockwise(c, true);
 	}
 	if (indic)
         perfect_yellow_side(c);

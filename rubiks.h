@@ -56,22 +56,22 @@ t_match    find_match(int i, int y, int z);
 // rotation
 void    rot_side(int i, rubiks *cube);
 
-void    UP_clockwise(rubiks *cube);
-void    UP_anticlockwise(rubiks *cube);
+void    UP_clockwise(rubiks *cube, bool silent);
+void    UP_anticlockwise(rubiks *cube, bool silent);
 
-void    DOWN_clockwise(rubiks *cube);
-void    DOWN_anticlockwise(rubiks *cube);
+void    DOWN_clockwise(rubiks *cube, bool silent);
+void    DOWN_anticlockwise(rubiks *cube, bool silent);
 
-void    LEFT_clockwise(rubiks *cube);
-void    LEFT_anticlockwise(rubiks *cube);
+void    LEFT_clockwise(rubiks *cube, bool silent);
+void    LEFT_anticlockwise(rubiks *cube, bool silent);
 
-void    FRONT_clockwise(rubiks *cube);
-void    FRONT_anticlockwise(rubiks *cube);
+void    FRONT_clockwise(rubiks *cube, bool silent);
+void    FRONT_anticlockwise(rubiks *cube, bool silent);
 
-void    RIGHT_clockwise(rubiks *cube);
-void    RIGHT_anticlockwise(rubiks *cube);
+void    RIGHT_clockwise(rubiks *cube, bool silent);
+void    RIGHT_anticlockwise(rubiks *cube, bool silent);
 
-void    BACK_clockwise(rubiks *cube);
-void    BACK_anticlockwise(rubiks *cube);
+void    BACK_clockwise(rubiks *cube, bool silent);
+void    BACK_anticlockwise(rubiks *cube, bool silent);
 
 #endif
