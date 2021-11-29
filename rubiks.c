@@ -607,7 +607,7 @@ void    white_cross(rubiks *c)
 							exec_moves("R U' B U B'", c);
                         else if (i == 4)
 							exec_moves("B U' L U L'", c);
-                        RIGHT_clockwise(c, true);
+                        RIGHT_clockwise(c, false);
                     }
                     else if (y == 2 && z == 1)
                     {
@@ -777,8 +777,9 @@ bool    isSide(T_COLOR color, int i)
 }
 
 
-void    isOnSide(rubiks *c)
+int    isOnSide(rubiks *c)
 {
+    int indic = 0;
     t_pos ***p = c->position;
 
     if (p[2][2][2].color == W && p[5][0][2].color == G && p[3][2][0].color == R)// RED GREEN WHITE
@@ -805,6 +806,9 @@ void    isOnSide(rubiks *c)
 		exec_moves("L' D2 L D L' D' L", c);
     else if (p[4][2][2].color == B && p[5][2][0].color == O && p[1][2][0].color == W) // BLUE ORANGE WHITE
 		exec_moves("L' D' L", c);
+    else
+        indic = 1;
+    return (indic);
 }
 
 void solve_white_corners(rubiks *c)
@@ -870,11 +874,16 @@ void solve_white_corners(rubiks *c)
                                 }
                             }
                         }
+                        int indic = 0;
                         for (int rot = 0; rot <= 4; rot++)
                         {
-                            isOnSide(c);
+                            if (is_white_corners_place(c))
+                                return ;
+                            indic += isOnSide(c);
                             exec_moves("D", c);
                         }
+                        // if (indic == 4)
+                        //     printf("\b\b\b\b\b\b\b\b");
                     }
                 }
             }
@@ -993,7 +1002,7 @@ void    yellow_edge(rubiks *c)
 			exec_moves("L D L' D L D2 L' D", c);
         if (isPerfectYellowCross(c))
             return ;
-        DOWN_clockwise(c, true);
+        DOWN_clockwise(c, false);
     }
 }
 
@@ -1142,7 +1151,7 @@ void    perfect_yellow_side(rubiks *c)
     else
 	{
 		indic = 1;
-        combR(c); combR(c); DOWN_anticlockwise(c, true); combR(c); combR(c); combR(c); combR(c); DOWN_clockwise(c, true);
+        combR(c); combR(c); DOWN_anticlockwise(c, false); combR(c); combR(c); combR(c); combR(c); DOWN_clockwise(c, false);
 	}
 	if (indic)
         perfect_yellow_side(c);
