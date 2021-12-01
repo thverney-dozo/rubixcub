@@ -34,21 +34,22 @@ typedef struct  rubiks
 
 int select_color(T_COLOR color);
 
+void    insert_move(char *sol, char *toInsert);
 char    *shuffle_generator(int moves);
 rubiks  *scramble_rubiks(rubiks *cube, char *shuffle);
 void    display_rubiks(rubiks *cube);
 void    blank_rubiks(rubiks *cube);
 bool    is_illegal(rubiks *cube);
-void    exec_moves(char *instruction, rubiks *c);
+void    exec_moves(char *instruction, rubiks *c, char *sol);
 
 // resolution
-void    white_cross(rubiks *cube);
-void    solve_white_corners(rubiks *cube);
-void    first_two_layers(rubiks *cube);
-void    yellow_cross(rubiks *cube);
-void    yellow_edge(rubiks *cube);
-void    yellow_corners(rubiks *cube);
-void    perfect_yellow_side(rubiks *cube);
+void    white_cross(rubiks *cube, char *sol);
+void    solve_white_corners(rubiks *cube, char *sol);
+void    first_two_layers(rubiks *cube, char *sol);
+void    yellow_cross(rubiks *cube, char *sol);
+void    yellow_edge(rubiks *cube, char *sol);
+void    yellow_corners(rubiks *cube, char *sol);
+void    perfect_yellow_side(rubiks *cube, char *sol);
 
 
 t_match    find_match(int i, int y, int z);
@@ -56,22 +57,22 @@ t_match    find_match(int i, int y, int z);
 // rotation
 void    rot_side(int i, rubiks *cube);
 
-void    UP_clockwise(rubiks *cube, bool silent);
-void    UP_anticlockwise(rubiks *cube, bool silent);
+void    UP_clockwise(rubiks *cube, char *sol, bool silent);
+void    UP_anticlockwise(rubiks *cube, char *sol, bool silent);
 
-void    DOWN_clockwise(rubiks *cube, bool silent);
-void    DOWN_anticlockwise(rubiks *cube, bool silent);
+void    DOWN_clockwise(rubiks *cube, char *sol, bool silent);
+void    DOWN_anticlockwise(rubiks *cube, char *sol, bool silent);
 
-void    LEFT_clockwise(rubiks *cube, bool silent);
-void    LEFT_anticlockwise(rubiks *cube, bool silent);
+void    LEFT_clockwise(rubiks *cube, char *sol, bool silent);
+void    LEFT_anticlockwise(rubiks *cube, char *sol, bool silent);
 
-void    FRONT_clockwise(rubiks *cube, bool silent);
-void    FRONT_anticlockwise(rubiks *cube, bool silent);
+void    FRONT_clockwise(rubiks *cube, char *sol, bool silent);
+void    FRONT_anticlockwise(rubiks *cube, char *sol, bool silent);
 
-void    RIGHT_clockwise(rubiks *cube, bool silent);
-void    RIGHT_anticlockwise(rubiks *cube, bool silent);
+void    RIGHT_clockwise(rubiks *cube, char *sol, bool silent);
+void    RIGHT_anticlockwise(rubiks *cube, char *sol, bool silent);
 
-void    BACK_clockwise(rubiks *cube, bool silent);
-void    BACK_anticlockwise(rubiks *cube, bool silent);
+void    BACK_clockwise(rubiks *cube, char *sol, bool silent);
+void    BACK_anticlockwise(rubiks *cube, char *sol, bool silent);
 
 #endif
