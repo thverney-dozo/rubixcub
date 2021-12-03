@@ -162,29 +162,89 @@ void	parse_error(char *move)
 	}
 }
 
+// F2' L2' R2 D' D' B2 D' D' D2 F2 F' D' D2' D2 D F' D' F D2 D B' D2 R D R' D' D2 R' D2 D R' D' R D2 D2 D2 D2 D2 D2 D R' D' B' D2 D B' D' B D2 D' F' D F D L D' L' D2' L' D L D B D' B' D D' B' D B D R D' R' D2 D2 F D F' D' R' R F D F' D' R' D F D F' D F D2' D R' D L D' R D L' D' F' D B D' F D B' D' F' U' F U F' U' F U D' F' U' F U F' U' F U F' U' F U F' U' F U D L' U' L U L' U' L U D L' U' L U L' U' L U D2' U' L U L' U' L U D
+
+bool is_alpha(char c)
+{
+	if (c == 'F' || c == 'R' || c == 'U' || c == 'B' || c == 'L' || c == 'D')
+		return true;
+	return false;
+}
+
 void	reduce_moves(char *solution)
 {
+	
 	int i = 0;
 	char tmp[4096];
 	char c;
+	int indic = 0;
 	for (int y = 0; solution[y]; y++)
 	{
 		c = solution[y];
-		if (solution[y + 1] == ' ' && solution[y + 2] == c && solution[y + 3] == ' ')
+		if (is_alpha(c) && solution[y + 1] == ' ' && solution[y + 2] == c && solution[y + 3] == ' ')
 		{
 			tmp[i++] = c;
 			tmp[i++] = '2';
+			y += 2;
+			indic++;
+		}
+		else if (is_alpha(c) && solution[y + 1] == '2' && solution[y + 2] == ' ' && solution[y + 3] == c && solution[y + 4] == '2')
+		{
 			y += 4;
+			indic++;
+		}
+		else if (c == ' ' && solution[y + 1] == ' ')
+		{
+			tmp[i++] = ' ';
+			y += 1;
+			indic++;
+		}
+		else if (is_alpha(c) && solution[y + 1] == '2' && solution[y + 2] == ' ' && solution[y + 3] == c && solution[y + 4] == ' ')
+		{
+			tmp[i++] = c;
+			tmp[i++] = 39;
+			y += 3;
+			indic++;
+		}
+		else if (is_alpha(c) && solution[y + 1] == ' ' && solution[y + 2] == c && solution[y + 3] == '2')
+		{
+			tmp[i++] = c;
+			tmp[i++] = 39;
+			y += 3;
+			indic++;
+		}
+		else if (is_alpha(c) && solution[y + 1] == 39 && solution[y + 2] == ' ' && solution[y + 3] == c && solution[y + 4] == ' ')
+		{
+			y += 3;
+			indic++;
+		}
+		else if (is_alpha(c) && solution[y + 1] == ' ' && solution[y + 2] == c && solution[y + 3] == 39)
+		{
+			y += 3;
+			indic++;
+		}
+		else if (is_alpha(c) && solution[y + 1] == '2' && solution[y + 2] == ' ' && solution[y + 3] == c && solution[y + 4] == 39)
+		{
+			tmp[i++] = c;
+			y += 4;
+			indic++;
+		}
+		else if (is_alpha(c) && solution[y + 1] == 39 && solution[y + 2] == ' ' && solution[y + 3] == c && solution[y + 4] == '2')
+		{
+			tmp[i++] = c;
+			y += 4;
+			indic++;
 		}
 		else
 			tmp[i++] = c;
-		
 	}
-	bzero(&solution, strlen(solution));
-	for(int i = 0; tmp[i]; i++)
-		solution[i] = tmp[i];
-	bzero(&tmp, strlen(tmp));
-	printf("%s",solution);
+	bzero(solution, strlen(solution));
+	int index = 0;
+	for(; tmp[index]; index++)
+		solution[index] = tmp[index];
+	solution[i] = '\0';
+	if (indic != 0)
+		reduce_moves(solution);
 }
 
 void	execute_move(char *move, rubiks *c, bool silent, char *sol)
@@ -269,6 +329,7 @@ void    exec_moves(char *instruction, rubiks *c, char *sol)
 		j = 0;
 		while (*instruction && *instruction != ' ')
 			tmp[j++] = *(instruction++);
+		tmp[j] = '\0';
 		execute_move(tmp, c, false, sol);
 		bzero(&tmp, sizeof(tmp));
 		if (*instruction)
@@ -289,7 +350,6 @@ void	rubik42_execution(char *instruction, rubiks *c)
 	char old_move[3];
 	old_move[2] = '\0';
 	int j = 0;
-	
 	while (*instruction != '\0')
 	{
 		j = 0;
@@ -301,9 +361,11 @@ void	rubik42_execution(char *instruction, rubiks *c)
 			instruction++;
 	}
 	solve(c, false, solution);
+	// printf("%s\n",solution);
+
 	reduce_moves(solution);
-	// printf("%s\n", solution);
-	free_rubiks(c); // free all alocated memory
+	printf("%s\n", solution);
+	free_rubiks(c); // free all alocated msemory
 }
 
 int     main(int ac, char **av)
@@ -317,3 +379,6 @@ int     main(int ac, char **av)
 		rubik42_execution(av[1], c);
 	}
 }
+
+// F F D R R D' L L F U' R U R' R F F D D B B B R D' R' B' F F L' D' L D F D F' D D F' D D F D F' D' F 
+// F F D R R D' L L F U' R U R' R F F D D B B B R D' R' B' F F L' D' L D F D F' D D F' D D F D F' D' F D D B' D' B D D D D L' D' L D D' 

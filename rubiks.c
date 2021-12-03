@@ -879,8 +879,8 @@ void solve_white_corners(rubiks *c, char *sol)
                             indic += isOnSide(c, sol);
                             exec_moves("D", c, sol);
                         }
-                        // if (indic == 4)
-                        //     insert_move(sol, "");b\b\b\b\b\b");
+                        if (indic == 4)
+                        {}
                     }
                 }
             }
@@ -924,6 +924,7 @@ void    isOnTwoLayer(rubiks *c, char *sol)
 void    first_two_layers(rubiks *c, char *sol)
 {
     t_pos ***p = c->position;
+
 
     while (!isTwoLayers(c))
     {
